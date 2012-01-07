@@ -40,8 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\AiComponent.cs" />
+    <Compile Include="Components\CollidableComponent.cs" />
+    <Compile Include="Components\Interface\IComponent.cs" />
+    <Compile Include="Components\RenderableComponent.cs" />
     <Compile Include="Context\EntityContext.cs" />
     <Compile Include="Context\IEntityContext.cs" />
+    <Compile Include="Controllers\AiController.cs" />
+    <Compile Include="Controllers\CollidableController.cs" />
+    <Compile Include="Controllers\IAiController.cs" />
+    <Compile Include="Controllers\ICollidableController.cs" />
+    <Compile Include="Controllers\IRenderableController.cs" />
+    <Compile Include="Controllers\RenderableController.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
@@ -56,12 +66,19 @@
     <Compile Include="Repositories\AiRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CollidableRepository.cs" />
+    <Compile Include="Repositories\EntityRepository\EntityRepository.cs" />
     <Compile Include="Repositories\IAiRepository.cs" />
     <Compile Include="Repositories\ICollidableRepository.cs" />
+    <Compile Include="Repositories\EntityRepository\IEntityRepository.cs" />
     <Compile Include="Repositories\IRenderableRepository.cs" />
     <Compile Include="Repositories\RenderableRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LogSystem\LogSystem.csproj">
+      <Project>{B142310A-F56C-4477-A420-4C454D16D8D9}</Project>
+      <Name>LogSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
