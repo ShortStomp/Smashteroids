@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Entity>
+    <Components>
+      <Renderable>
+        <Position>
+          <x>100</x>
+          <y>300</y>
+        </Position>
+        <sprite managers="ISpriteManager">
+          <filename>BlueShip</filename>
+        </sprite>
+      </Renderable>
+    </Components>
+  </Entity>
+  
+</root>

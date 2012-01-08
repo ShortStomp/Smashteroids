@@ -14,5 +14,14 @@ namespace EntityLibrary.Context
 
 		#endregion
 
+		#region Contructors
+
+		internal EntityContext()
+		{
+			Entities = new List<IEntity>();
+		}
+
+		#endregion
+
 	}
 }

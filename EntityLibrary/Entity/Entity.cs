@@ -17,6 +17,15 @@ namespace EntityLibrary.Entity
 
 		#endregion
 
+		#region Constructors
+
+		internal Entity()
+		{
+			Components = new List<IComponent>();
+		}
+
+		#endregion
+
 
 		#region IEntity Members
 
@@ -62,7 +71,7 @@ namespace EntityLibrary.Entity
 		public bool ContainsComponent(IComponent component)
 		{
 			return Components
-				.SingleOrDefault(com => (com == component)) == default(IComponent);
+				.SingleOrDefault(com => (com == component)) != default(IComponent);
 		}
 
 

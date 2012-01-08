@@ -58,6 +58,7 @@
     <Compile Include="Context\EntityContext.cs" />
     <Compile Include="Context\IEntityContext.cs" />
     <Compile Include="Controllers\AiController.cs" />
+    <Compile Include="Controllers\Base\Controller.cs" />
     <Compile Include="Controllers\CollidableController.cs" />
     <Compile Include="Controllers\EntityController\EntityController.cs" />
     <Compile Include="Controllers\EntityController\IEntityController.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Controllers\ICollidableController.cs" />
     <Compile Include="Controllers\IRenderableController.cs" />
     <Compile Include="Controllers\RenderableController.cs" />
+    <Compile Include="EntityIO\Data\BaseData.cs" />
+    <Compile Include="EntityIO\Data\EntityData.cs" />
     <Compile Include="EntityIO\EntityParser.cs" />
     <Compile Include="EntityIO\IEntityParser.cs" />
     <Compile Include="Entity\Entity.cs" />

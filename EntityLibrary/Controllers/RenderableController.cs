@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EntityLibrary.Repositories;
+using EntityLibrary.Controllers.Base;
 
 namespace EntityLibrary.Controllers
 {
-	internal class RenderableController : IRenderableController
+	internal class RenderableController : Controller, IRenderableController
 	{
 		#region Fields
 		
@@ -19,6 +20,15 @@ namespace EntityLibrary.Controllers
 		internal RenderableController(ITextureRepository textureRepo)
 		{
 			_textureRepository = textureRepo;
+		}
+
+		#endregion
+
+		#region Controller overloads
+
+		protected override void Initialize()
+		{
+			throw new NotImplementedException();
 		}
 
 		#endregion
