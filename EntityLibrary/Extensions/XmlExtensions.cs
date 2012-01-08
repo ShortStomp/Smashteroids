@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using System;
 
-namespace Smashteroids.Extensions
+namespace EntityLibrary.Extensions
 {
 	public static class XmlExtensions
 	{

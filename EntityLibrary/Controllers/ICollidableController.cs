@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EntityLibrary.Controllers
 {
-	interface ICollidableController
+	public interface ICollidableController
 	{
 	}
 }

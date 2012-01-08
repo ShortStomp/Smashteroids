@@ -9,9 +9,21 @@ namespace EntityLibrary.Entity
 	public interface IEntity
 	{
 		/// <summary>
-		/// Collection of components
+		/// Add a component to the entity.
 		/// </summary>
-		ICollection<IComponent> Components { get; set; }
+		/// <param name="component"></param>
+		void AddComponent(IComponent component);
+
+
+		// Remove a component from the entity.
+		void RemoveComponent(IComponent component);
+
+
+		/// <summary>
+		/// Gets the components as a collection.
+		/// </summary>
+		/// <returns></returns>
+		IEnumerable<IComponent> GetComponents();
 
 
 		/// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Linq;
+using LogSystem.Extensions;
 using Microsoft.Xna.Framework;
 
 namespace LogSystem
@@ -64,25 +65,25 @@ namespace LogSystem
 			_game.Exit();
 		}
 
-		//public static void WriteFatalFileIOException(Exception exception, XElement xElement)
-		//{
-		//    WriteExceptionThenQuit(
-		//        MessageType.FileIOError,
-		//        exception, 
-		//        string.Format("file IO error, exception: element: {0}, line number: {1}",
-		//        xElement.Value,
-		//        xElement.LineNumber()));
-		//}
+		public static void WriteFatalIOException(Exception exception, XElement xElement)
+		{
+			WriteExceptionThenQuit(
+				MessageType.FileIOError,
+				exception,
+				string.Format("file IO error, exception: element: {0}, line number: {1}",
+				xElement.Value,
+				xElement.LineNumber()));
+		}
 
-		//public static void WriteFileIOMessage(XElement xElement)
-		//{
-		//    if (xElement == null)
-		//    {
-		//        WriteFatalFileIOException(new ArgumentNullException("element"), xElement);
-		//    }
-		//    InternalWrite(MessageType.FileIOInfo,
-		//        true, string.Format("Parsing {0}, line #{1}", xElement.Value, xElement.LineNumber()));
-		//}
+		public static void WriteIOMessage(XElement xElement)
+		{
+			if (xElement == null)
+			{
+				WriteFatalIOException(new ArgumentNullException("element"), xElement);
+			}
+			InternalWrite(MessageType.FileIOInfo,
+				true, string.Format("Parsing {0}, line #{1}", xElement.Value, xElement.LineNumber()));
+		}
 
 		/// <summary>
 		/// Close down the Logger.

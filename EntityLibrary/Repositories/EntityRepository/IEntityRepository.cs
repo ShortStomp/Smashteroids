@@ -23,6 +23,7 @@ namespace EntityLibrary.Repositories.EntityRepository
 		/// <param name="entityBatch">The entity batch.</param>
 		void InsertBatchEntities(IEnumerable<IEntity> entityBatch);
 
+
 		/// <summary>
 		/// Removes an entity from the repository.
 		/// <remarks> Sets entity to null.</remarks>
@@ -38,15 +39,5 @@ namespace EntityLibrary.Repositories.EntityRepository
 		/// <param name="component">The component.</param>
 		/// <returns></returns>
 		IEnumerable<IEntity> GetEntitiesWithComponent(IComponent component);
-
-
-		/// <summary>
-		/// Adds a component to an entity.
-		/// </summary>
-		/// <exception cref="ComponentAlreadyPresentException"
-		/// <typeparam name="T"></typeparam>
-		/// <param name="entity">The entity.</param>
-		/// <param name="componentToAdd">The component to add.</param>
-		void AddComponentToEntity(IEntity entity, IComponent componentToAdd);
 	}
 }

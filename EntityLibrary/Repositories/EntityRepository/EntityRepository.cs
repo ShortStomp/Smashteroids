@@ -79,39 +79,9 @@ namespace EntityLibrary.Repositories.EntityRepository
 				.Where(ent => ent.ContainsComponent(component));
 		}
 
-
-		public void AddComponentToEntity(IEntity entity, IComponent componentToAdd)
-		{
-			if (EntityHasComponent(entity, componentToAdd))
-			{
-				Logger.WriteExceptionThenQuit(
-					MessageType.RuntimeException, 
-					new InvalidOperationException(
-						string.Format("Attempting to add already existing component {0} to entity {1}",
-						componentToAdd.ToString(), entity.ToString()))
-				);
-			}
-
-			// safe to attach component to entity
-			entity.Components.Add(componentToAdd);
-		}
-
 		#endregion
 
 		#region Private Members
-
-
-		/// <summary>
-		/// Determines if an entity contains a component.
-		/// </summary>
-		/// <param name="entity">The entity.</param>
-		/// <param name="component">The component.</param>
-		/// <returns></returns>
-		private static bool EntityHasComponent(IEntity entity, IComponent component)
-		{
-			return entity.Components
-				.SingleOrDefault(com => (com == component)) == default(IComponent);
-		}
 
 
 		private bool EntityInCollection(IEntity entity)

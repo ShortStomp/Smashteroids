@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EntityLibrary.Controllers
 {
-	class AiController : IAiController
+	public class AiController : IAiController
 	{
 	}
 }

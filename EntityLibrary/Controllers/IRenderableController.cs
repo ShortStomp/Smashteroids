@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EntityLibrary.Controllers
 {
-	interface IRenderableController
+	public interface IRenderableController
 	{
 	}
 }

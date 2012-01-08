@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EntityLibrary.Controllers
 {
-	class CollidableController : ICollidableController
+	public class CollidableController : ICollidableController
 	{
 	}
 }
