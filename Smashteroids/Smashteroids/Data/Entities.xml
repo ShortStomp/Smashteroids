@@ -13,5 +13,18 @@
       </Renderable>
     </Components>
   </Entity>
+  <Entity>
+    <Components>
+      <Renderable>
+        <Position>
+          <x>300</x>
+          <y>100</y>
+        </Position>
+        <sprite>
+          <filename>BlueShip</filename>
+        </sprite>
+      </Renderable>
+    </Components>
+  </Entity>
   
 </root>

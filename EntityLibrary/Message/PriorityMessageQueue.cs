@@ -9,13 +9,18 @@ namespace EntityLibrary.Message
 	{
 		#region Fields
 
-		SortedList<float, IMessage> _messageQueue;
+		SortedList<DateTime, IMessage> _messageQueue;
 
 		#endregion
+
+		#region Constructors
+
 		internal PriorityMessageQueue()
 		{
-			_messageQueue = new SortedList<float, IMessage>();
+			_messageQueue = new SortedList<DateTime, IMessage>();
 		}
+
+		#endregion
 
 		public void AddMessage(IMessage message)
 		{
@@ -27,11 +32,22 @@ namespace EntityLibrary.Message
 			return !_messageQueue.Any();
 		}
 
-		public void DispatchMessage()
+		public void DispatchMessage(IMessage messageToDeliver)
 		{
-			_messageQueue
-				.FirstOrDefault()
-				.Value.ExecuteMessage();
+			messageToDeliver.ExecuteMessage();
+		}
+
+		public IEnumerable<IMessage> PendingMessages()
+		{
+			ICollection<IMessage> temp = new List<IMessage>();
+			var j = _messageQueue.TakeWhile(x => x.Key <= DateTime.Now);
+
+			foreach (var pair in j)
+			{
+				temp.Add(pair.Value);
+			}
+
+			return temp;
 		}
 	}
 }

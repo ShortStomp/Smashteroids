@@ -34,7 +34,7 @@ namespace EntityLibrary.Message
 
 		#region IMessageFactory Members
 
-		public void CreateAndSendMessage(Delegate method, float msTimeToWait = 0, params object[] args)
+		public void CreateAndSendMessage(Delegate method, DateTime msTimeToWait, params object[] args)
 		{
 			_messageQueue.AddMessage(new Message(method, msTimeToWait, args));
 		}

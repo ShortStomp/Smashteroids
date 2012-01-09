@@ -8,6 +8,6 @@ namespace EntityLibrary.Message
 	public interface IMessage
 	{
 		void ExecuteMessage();
-		float TimeToDeliver();
+		DateTime TimeToDeliver();
 	}
 }

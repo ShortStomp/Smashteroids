@@ -47,10 +47,7 @@ namespace EntityLibrary.Controllers
 
 		public void CreateNewTextureForSprite(string filename, Sprite sprite)
 		{
-			if (!_textureRepository.ContainsTextureWithFilename(filename))
-			{
-				_textureRepository.CreateTextureForSprite(filename, sprite);
-			}
+			_textureRepository.CreateTextureForSprite(filename, sprite);
 		}
 
 		public void DrawRenderables(SpriteBatch spriteBatch, GameTime gameTime)

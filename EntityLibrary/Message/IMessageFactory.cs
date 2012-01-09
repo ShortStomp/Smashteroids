@@ -9,6 +9,6 @@ namespace EntityLibrary.Message
 {
 	internal interface IMessageFactory
 	{
-		void CreateAndSendMessage(Delegate method, float msTimeToWait = 0, params object[] args);
+		void CreateAndSendMessage(Delegate method, DateTime exectuteTime, params object[] args);
 	}
 }

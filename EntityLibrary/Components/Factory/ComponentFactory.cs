@@ -39,7 +39,7 @@ namespace EntityLibrary.Components.Factory
 
 
 				_messageFactory.CreateAndSendMessage(
-					(Action<string, Sprite>)_renderableController.CreateNewTextureForSprite, 0.0f, rc.Sprite.Filename, rc.Sprite);
+					(Action<string, Sprite>)_renderableController.CreateNewTextureForSprite, DateTime.Now, rc.Sprite.Filename, rc.Sprite);
 				
 				//_messageFactory.CreateAndSendMessage((Controller)_messageFactory.RenderableControllerReference());
 				// add the texture to the texture repository

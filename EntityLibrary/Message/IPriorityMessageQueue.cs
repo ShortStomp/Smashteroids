@@ -10,6 +10,7 @@ namespace EntityLibrary.Message
 		bool IsEmpty();
 
 		void AddMessage(IMessage message);
-		void DispatchMessage();
+		void DispatchMessage(IMessage messageToDeliver);
+		IEnumerable<IMessage> PendingMessages();
 	}
 }

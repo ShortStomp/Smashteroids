@@ -35,18 +35,16 @@ namespace EntityLibrary.Repositories
 
 		public void CreateTextureForSprite(string filename, Sprite sprite)
 		{
-			if(ContainsTextureWithFilename(filename))
+			if (ContainsTextureWithFilename(filename))
 			{
-				Logger.WriteExceptionThenQuit(
-					MessageType.RuntimeException,
-					new InvalidOperationException(string.Format(
-						"Adding texture {0} to texture repository failed, texture already in repository."))
-					);
+				sprite.Texture = GetTextureByName(filename);
 			}
-
-			// texture is not already present, ok to add
-			sprite.Texture = _contentManager.Load<Texture2D>("./images/" + filename);
-			_textures.Add(filename, sprite.Texture);
+			else
+			{
+				// texture is not already present, ok to add
+				sprite.Texture = _contentManager.Load<Texture2D>("./images/" + filename);
+				_textures.Add(filename, sprite.Texture);
+			}
 		}
 
 

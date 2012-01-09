@@ -100,7 +100,11 @@ namespace Smashteroids
 			 * if this is moved to a worker-thread, it could become intersting */
 			if (!_entityMessagingSystem.IsEmpty())
 			{
-				_entityMessagingSystem.DispatchMessage();
+				foreach (var t in _entityMessagingSystem.PendingMessages())
+				{
+					_entityMessagingSystem.DispatchMessage(t);
+				}
+				//_entityMessagingSystem.DispatchMessage();
 			}
 
 			// TODO: Add your update logic here
