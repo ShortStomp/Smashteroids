@@ -11,7 +11,7 @@ namespace EntityLibrary.Message
 
 		internal Delegate _method;
 		internal float _timeToDeliver;
-		internal object[] _methodArguments;
+		internal object[] _args;
 
 		#endregion
 
@@ -19,13 +19,12 @@ namespace EntityLibrary.Message
 		{
 			_method = method;
 			_timeToDeliver = timeToDeliver;
-			_methodArguments = args;
+			_args = args;
 		}
 
 		public void ExecuteMessage()
 		{
-			// TODO: this will be fun to figure out how to abstract...
-			_method.DynamicInvoke(_methodArguments.First().ToString(), _methodArguments[1]);
+			_method.DynamicInvoke(_args);
 		}
 
 		public float TimeToDeliver()

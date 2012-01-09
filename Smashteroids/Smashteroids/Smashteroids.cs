@@ -4,6 +4,7 @@ using LogSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using EntityLibrary.Message;
 
 namespace Smashteroids
 {
@@ -18,10 +19,13 @@ namespace Smashteroids
 		private SpriteBatch _spriteBatch;
 
 		// Controllers
-		//private IEntityController _entityController;
+		private IEntityController _entityController;
 		private IRenderableController _renderableController;
 		private IAiController _aiController;
 		private ICollidableController _collidableController;
+
+		// entity messaging system
+		private IPriorityMessageQueue _entityMessagingSystem;
 
 		#endregion
 		
@@ -51,10 +55,14 @@ namespace Smashteroids
 
 			// TODO: Add your initialization logic here
 
-			//_entityController = IocContainer.Resolve<IEntityController>();
+			// Resolve controllers
+			_entityController = IocContainer.Resolve<IEntityController>();
 			_renderableController = IocContainer.Resolve<IRenderableController>();
 			_aiController = IocContainer.Resolve<IAiController>();
 			_collidableController = IocContainer.Resolve<ICollidableController>();
+
+			// resolve messaging system
+			_entityMessagingSystem = IocContainer.Resolve<IPriorityMessageQueue>();
 
 			base.Initialize();
 		}
@@ -87,6 +95,13 @@ namespace Smashteroids
 			// Allows the game to exit
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
 				this.Exit();
+
+			/* for now, we're only processing 1 message per update.
+			 * if this is moved to a worker-thread, it could become intersting */
+			if (!_entityMessagingSystem.IsEmpty())
+			{
+				_entityMessagingSystem.DispatchMessage();
+			}
 
 			// TODO: Add your update logic here
 			//_aiController.Do();
