@@ -1,11 +1,10 @@
 ﻿using EntityLibrary.Components.Interface;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using EntityLibrary.Components.Objects;
+using Microsoft.Xna.Framework;
 
 namespace EntityLibrary.Components
 {
-	internal class RenderableComponent : IComponent
+	public class RenderableComponent : IComponent
 	{
 		internal Sprite Sprite{ get; set; }
 		internal Vector2 Position { get; set; }

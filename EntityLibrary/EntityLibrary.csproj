@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\Smashteroids\Smashteroids\MyRuleSet.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,6 +41,7 @@
       <HintPath>..\packages\Autofac.2.5.2.830\lib\NET40\Autofac.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,7 +54,9 @@
   <ItemGroup>
     <Compile Include="Components\AiComponent.cs" />
     <Compile Include="Components\CollidableComponent.cs" />
-    <Compile Include="Components\Interface\IComponent.cs" />
+    <Compile Include="Components\Factory\ComponentFactory.cs" />
+    <Compile Include="Components\Factory\IComponentFactory.cs" />
+    <Compile Include="Components\Interface\Component.cs" />
     <Compile Include="Components\Objects\Sprite.cs" />
     <Compile Include="Components\RenderableComponent.cs" />
     <Compile Include="Context\EntityContext.cs" />
@@ -66,7 +70,6 @@
     <Compile Include="Controllers\ICollidableController.cs" />
     <Compile Include="Controllers\IRenderableController.cs" />
     <Compile Include="Controllers\RenderableController.cs" />
-    <Compile Include="EntityIO\Data\BaseData.cs" />
     <Compile Include="EntityIO\Data\EntityData.cs" />
     <Compile Include="EntityIO\EntityParser.cs" />
     <Compile Include="EntityIO\IEntityParser.cs" />
@@ -75,10 +78,11 @@
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\IEntityFactory.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
-    <Compile Include="IocContainer\ContextModule.cs" />
-    <Compile Include="IocContainer\ControllerModule.cs" />
-    <Compile Include="IocContainer\IocContainer.cs" />
-    <Compile Include="IocContainer\RepositoryModule.cs" />
+    <Compile Include="IOC\ContextModule.cs" />
+    <Compile Include="IOC\ControllerModule.cs" />
+    <Compile Include="IOC\FactoryModule.cs" />
+    <Compile Include="IOC\IocContainer.cs" />
+    <Compile Include="IOC\RepositoryModule.cs" />
     <Compile Include="Message\Data\IMessageData.cs" />
     <Compile Include="Message\Data\MessageData.cs" />
     <Compile Include="Message\IMessage.cs" />

@@ -6,10 +6,12 @@ using EntityLibrary.Repositories.EntityRepository;
 using EntityLibrary.Entity;
 using EntityLibrary.Controllers.Base;
 using EntityLibrary.EntityIO;
+using EntityLibrary.Components.Interface;
+using EntityLibrary.Components;
 
 namespace EntityLibrary.Controllers
 {
-	public class EntityController : Controller, IEntityController
+	internal class EntityController : Controller, IEntityController
 	{
 		#region Private Fields
 
@@ -55,14 +57,9 @@ namespace EntityLibrary.Controllers
 			_entityRepository.InsertEntity(_entityFactory.CreateEntity(null));
 		}
 
-		public void AddComponentToEntity(Entity.IEntity entity, Components.Interface.IComponent component)
+		public IEnumerable<RenderableComponent> RenderableComponents()
 		{
-			throw new NotImplementedException();
-		}
-
-		public void AddComponentsToEntity(Entity.IEntity entity, IEnumerable<Components.Interface.IComponent> components)
-		{
-			throw new NotImplementedException();
+			return _entityRepository.GetEntitiesWithComponent<RenderableComponent>();
 		}
 
 		#endregion

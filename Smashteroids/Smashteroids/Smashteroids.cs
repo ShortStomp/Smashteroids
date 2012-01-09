@@ -1,5 +1,5 @@
 using EntityLibrary.Controllers;
-using EntityLibrary.IocContainer;
+using EntityLibrary.IOC;
 using LogSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +10,7 @@ namespace Smashteroids
 	/// <summary>
 	/// This is the main type for your game
 	/// </summary>
-	public sealed class Smashteroids : Microsoft.Xna.Framework.Game
+	public sealed class Instance : Microsoft.Xna.Framework.Game
 	{
 		#region Private Fields
 
@@ -18,12 +18,14 @@ namespace Smashteroids
 		private SpriteBatch _spriteBatch;
 
 		// Controllers
-		private IEntityController _entityController;
+		//private IEntityController _entityController;
 		private IRenderableController _renderableController;
+		private IAiController _aiController;
+		private ICollidableController _collidableController;
 
 		#endregion
 		
-		public Smashteroids()
+		public Instance()
 		{
 			_graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
@@ -41,13 +43,18 @@ namespace Smashteroids
 			// Initialize the logger system
 			Logger.Initialize(this);
 
+			// Give the IOC container a refence to the game.
+			IocContainer.SetGameReference(this);
+
 			// Create a new SpriteBatch, which can be used to draw textures.
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// TODO: Add your initialization logic here
 
-			_entityController = IocContainer.Resolve<IEntityController>();
+			//_entityController = IocContainer.Resolve<IEntityController>();
 			_renderableController = IocContainer.Resolve<IRenderableController>();
+			_aiController = IocContainer.Resolve<IAiController>();
+			_collidableController = IocContainer.Resolve<ICollidableController>();
 
 			base.Initialize();
 		}
@@ -82,6 +89,8 @@ namespace Smashteroids
 				this.Exit();
 
 			// TODO: Add your update logic here
+			//_aiController.Do();
+			//_collidableController.Do();
 
 			base.Update(gameTime);
 		}
@@ -94,13 +103,9 @@ namespace Smashteroids
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			_spriteBatch.Begin();
+			_renderableController.DrawRenderables(_spriteBatch, gameTime);
 
 			base.Draw(gameTime);
-
-			_spriteBatch.End();
-
-			// TODO: Add your drawing code here
 		}
 
 

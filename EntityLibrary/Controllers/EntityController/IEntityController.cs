@@ -5,13 +5,13 @@ using System.Text;
 using EntityLibrary.Repositories.EntityRepository;
 using EntityLibrary.Entity;
 using EntityLibrary.Components.Interface;
+using EntityLibrary.Components;
 
 namespace EntityLibrary.Controllers
 {
 	public interface IEntityController
 	{
 		void CreateEntity();
-		void AddComponentToEntity(IEntity entity, IComponent component);
-		void AddComponentsToEntity(IEntity entity, IEnumerable<IComponent> components);
+		IEnumerable<RenderableComponent> RenderableComponents();
 	}
 }

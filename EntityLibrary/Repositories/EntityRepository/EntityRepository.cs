@@ -73,10 +73,10 @@ namespace EntityLibrary.Repositories.EntityRepository
 		}
 
 
-		public IEnumerable<IEntity> GetEntitiesWithComponent(IComponent component)
+		public IEnumerable<T> GetEntitiesWithComponent<T>() where T : IComponent
 		{
 			return _context.Entities
-				.Where(ent => ent.ContainsComponent(component));
+				.OfType<T>();
 		}
 
 		#endregion

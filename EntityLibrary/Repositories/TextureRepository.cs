@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using LogSystem;
+using Microsoft.Xna.Framework.Content;
+using System.IO;
 
 namespace EntityLibrary.Repositories
 {
@@ -10,13 +12,15 @@ namespace EntityLibrary.Repositories
 		#region Fields
 
 		private IDictionary<string, Texture2D> _textures;
+		private ContentManager _contentManager;
 
 		#endregion
 
 		#region Constructor
 
-		internal TextureRepository()
+		internal TextureRepository(ContentManager manager)
 		{
+			_contentManager = manager;
 			_textures = new Dictionary<string, Texture2D>();
 		}
 
@@ -24,9 +28,14 @@ namespace EntityLibrary.Repositories
 
 		#region Members
 
+		public bool ContainsTextureWithFilename(string filename)
+		{
+			return _textures.Keys.Contains(filename);
+		}
+
 		public void AddTexture(string filename, Texture2D texture)
 		{
-			if(_textures.Keys.Contains(filename))
+			if(ContainsTextureWithFilename(filename))
 			{
 				Logger.WriteExceptionThenQuit(
 					MessageType.RuntimeException,
@@ -35,7 +44,8 @@ namespace EntityLibrary.Repositories
 					);
 			}
 
-			// texture is not already present, ok to add.
+			// texture is not already present, ok to add
+			_contentManager.Load<Texture2D>("./images/" + filename);
 			_textures.Add(filename, texture);
 		}
 

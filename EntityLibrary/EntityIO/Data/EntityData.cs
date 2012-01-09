@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using EntityLibrary.Components.Interface;
 
 namespace Smashteroids.Data
@@ -11,6 +8,6 @@ namespace Smashteroids.Data
 	/// </summary>
 	internal class EntityData
 	{
-		public IEnumerable<IComponent> Components;
+		internal IEnumerable<IComponent> Components;
 	}
 }

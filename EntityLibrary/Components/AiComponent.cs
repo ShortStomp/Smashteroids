@@ -2,7 +2,7 @@
 
 namespace EntityLibrary.Components
 {
-	public class AiComponent : IComponent
+	internal class AiComponent : IComponent
 	{
 	}
 }

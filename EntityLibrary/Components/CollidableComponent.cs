@@ -2,7 +2,7 @@
 
 namespace EntityLibrary.Components
 {
-	public class CollidableComponent : IComponent
+	internal class CollidableComponent : IComponent
 	{
 	}
 }

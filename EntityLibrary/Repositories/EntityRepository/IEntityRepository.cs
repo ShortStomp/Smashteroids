@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityLibrary.Entity;
+﻿using System.Collections.Generic;
 using EntityLibrary.Components.Interface;
+using EntityLibrary.Entity;
 
 namespace EntityLibrary.Repositories.EntityRepository
 {
@@ -38,6 +35,6 @@ namespace EntityLibrary.Repositories.EntityRepository
 		/// <typeparam name="T"></typeparam>
 		/// <param name="component">The component.</param>
 		/// <returns></returns>
-		IEnumerable<IEntity> GetEntitiesWithComponent(IComponent component);
+		IEnumerable<T> GetEntitiesWithComponent<T>() where T : IComponent;
 	}
 }

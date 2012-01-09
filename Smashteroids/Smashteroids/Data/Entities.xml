@@ -7,7 +7,7 @@
           <x>100</x>
           <y>300</y>
         </Position>
-        <sprite managers="ISpriteManager">
+        <sprite>
           <filename>BlueShip</filename>
         </sprite>
       </Renderable>

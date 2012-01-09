@@ -11,7 +11,7 @@ namespace Smashteroids
 		/// </summary>
 		static void Main(string[] args)
 		{
-			using (Smashteroids instance = new Smashteroids())
+			using (Instance instance = new Instance())
 			{
 				instance.Run();
 			}
