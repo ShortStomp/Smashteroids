@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using EntityLibrary.Components.Interface;
 using EntityLibrary.Components.Objects;
 using EntityLibrary.Controllers;
+using EntityLibrary.Message;
 using LogSystem;
 using Microsoft.Xna.Framework;
 
@@ -12,19 +13,23 @@ namespace EntityLibrary.Components.Factory
 	{
 		#region Fields
 
+		IMessageFactory _messageFactory;
+		IRenderableController _renderableController;
 
 		#endregion
 
 		#region Constructors
 
-		internal ComponentFactory()
+		internal ComponentFactory(IMessageFactory factory, IRenderableController rc)
 		{
+			_messageFactory = factory;
+			_renderableController = rc;
 		}
 
 		#endregion
 
-
 		#region IComponentFactory Members
+
 
 		public IComponent CreateComponent<T>(XElement xComponent) where T : IComponent
 		{
@@ -32,6 +37,11 @@ namespace EntityLibrary.Components.Factory
 			{
 				var rc =  ParseRenderableComponent(xComponent);
 
+
+				_messageFactory.CreateAndSendMessage(
+					(Action<string, Sprite>)_renderableController.CreateNewTextureForSprite, 0.0f, rc.Sprite.Filename, rc.Sprite);
+				
+				//_messageFactory.CreateAndSendMessage((Controller)_messageFactory.RenderableControllerReference());
 				// add the texture to the texture repository
 				// TODO: send message to the renderable controller, telling it to add the texture.
 				//_renderableController.AddTexture(rc.Sprite.Filename, rc.Sprite.Texture);

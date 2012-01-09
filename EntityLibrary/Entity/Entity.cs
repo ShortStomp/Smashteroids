@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EntityLibrary.Components.Interface;
 using LogSystem;
-using System;
 
 namespace EntityLibrary.Entity
 {
@@ -31,15 +31,15 @@ namespace EntityLibrary.Entity
 
 		public void AddComponent(IComponent component)
 		{
-			if (ContainsComponent(component))
-			{
-				Logger.WriteExceptionThenQuit(
-					MessageType.RuntimeException,
-					new InvalidOperationException(
-						string.Format("Attempting to add already existing component {0} to entity {1}",
-						component.ToString(), this.ToString()))
-				);
-			}
+			//if (ContainsComponent(component))
+			//{
+			//    Logger.WriteExceptionThenQuit(
+			//        MessageType.RuntimeException,
+			//        new InvalidOperationException(
+			//            string.Format("Attempting to add already existing component {0} to entity {1}",
+			//            component.ToString(), this.ToString()))
+			//    );
+			//}
 
 			// safe to attach component to entity
 			Components.Add(component);
@@ -48,15 +48,15 @@ namespace EntityLibrary.Entity
 
 		public void RemoveComponent(IComponent component)
 		{
-			if (!ContainsComponent(component))
-			{
-				Logger.WriteExceptionThenQuit(
-					MessageType.RuntimeException,
-					new InvalidOperationException(
-						string.Format("Attempting to remove non-existing component {0} to entity {1}.",
-						component.ToString(), this.ToString()))
-				);
-			}
+			//if (!ContainsComponent<Components.GetType()>())
+			//{
+			//    Logger.WriteExceptionThenQuit(
+			//        MessageType.RuntimeException,
+			//        new InvalidOperationException(
+			//            string.Format("Attempting to remove non-existing component {0} to entity {1}.",
+			//            component.ToString(), this.ToString()))
+			//    );
+			//}
 
 			// safe to remove component
 			Components.Remove(component);
@@ -68,10 +68,18 @@ namespace EntityLibrary.Entity
 		/// </summary>
 		/// <param name="component"></param>
 		/// <returns></returns>
-		public bool ContainsComponent(IComponent component)
+		public bool ContainsComponent<T>() where T : IComponent
 		{
 			return Components
-				.SingleOrDefault(com => (com == component)) != default(IComponent);
+				.OfType<T>().Any();
+		}
+
+
+		public T GetComponent<T>() where T : IComponent
+		{
+			return Components
+				.OfType<T>()
+				.SingleOrDefault();
 		}
 
 

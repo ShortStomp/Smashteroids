@@ -35,6 +35,14 @@ namespace EntityLibrary.Repositories.EntityRepository
 		/// <typeparam name="T"></typeparam>
 		/// <param name="component">The component.</param>
 		/// <returns></returns>
-		IEnumerable<T> GetEntitiesWithComponent<T>() where T : IComponent;
+		IEnumerable<IEntity> GetEntitiesWithComponent<T>() where T : IComponent;
+
+
+		/// <summary>
+		/// Get references to each component of type T, within the entities.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		IEnumerable<T> GetComponentsOfType<T>() where T : IComponent;
 	}
 }

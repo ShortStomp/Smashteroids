@@ -57,11 +57,6 @@ namespace EntityLibrary.Controllers
 			_entityRepository.InsertEntity(_entityFactory.CreateEntity(null));
 		}
 
-		public IEnumerable<RenderableComponent> RenderableComponents()
-		{
-			return _entityRepository.GetEntitiesWithComponent<RenderableComponent>();
-		}
-
 		#endregion
 	}
 }

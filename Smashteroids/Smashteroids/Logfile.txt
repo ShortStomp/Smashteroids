@@ -1,0 +1,7 @@
+[FileIOInfo] Parsing 100300BlueShip, line #5
+[FileIOInfo] Parsing 100300BlueShip, line #5
+[FileIOInfo] Parsing 100300BlueShip, line #7
+[FileIOInfo] Parsing 100300, line #8
+[FileIOInfo] Parsing BlueShip, line #12
+
+[Information] Shutting engine down ....

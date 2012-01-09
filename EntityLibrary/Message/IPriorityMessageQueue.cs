@@ -5,7 +5,11 @@ using System.Text;
 
 namespace EntityLibrary.Message
 {
-	interface IPriorityMessageQueue
+	public interface IPriorityMessageQueue
 	{
+		bool IsEmpty();
+
+		void AddMessage(IMessage message);
+		void DispatchMessage();
 	}
 }

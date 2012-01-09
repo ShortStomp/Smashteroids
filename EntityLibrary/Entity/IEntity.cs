@@ -24,11 +24,19 @@ namespace EntityLibrary.Entity
 
 
 		/// <summary>
+		/// Gets a reference to the component of type T within the entity.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		T GetComponent<T>() where T : IComponent;
+
+
+		/// <summary>
 		/// Determine if the entity contains the component
 		/// </summary>
 		/// <param name="entity">The entity.</param>
 		/// <param name="component">The component.</param>
 		/// <returns></returns>
-		bool ContainsComponent(IComponent component);
+		bool ContainsComponent<T>() where T : IComponent;
 	}
 }

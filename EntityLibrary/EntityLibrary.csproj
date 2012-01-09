@@ -82,9 +82,8 @@
     <Compile Include="IOC\ControllerModule.cs" />
     <Compile Include="IOC\FactoryModule.cs" />
     <Compile Include="IOC\IocContainer.cs" />
+    <Compile Include="IOC\MessagingModule.cs" />
     <Compile Include="IOC\RepositoryModule.cs" />
-    <Compile Include="Message\Data\IMessageData.cs" />
-    <Compile Include="Message\Data\MessageData.cs" />
     <Compile Include="Message\IMessage.cs" />
     <Compile Include="Message\IMessageFactory.cs" />
     <Compile Include="Message\IPriorityMessageQueue.cs" />

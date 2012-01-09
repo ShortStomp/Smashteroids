@@ -5,7 +5,9 @@ using System.Text;
 
 namespace EntityLibrary.Message
 {
-	interface IMessage
+	public interface IMessage
 	{
+		void ExecuteMessage();
+		float TimeToDeliver();
 	}
 }

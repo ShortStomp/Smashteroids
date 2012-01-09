@@ -73,10 +73,29 @@ namespace EntityLibrary.Repositories.EntityRepository
 		}
 
 
-		public IEnumerable<T> GetEntitiesWithComponent<T>() where T : IComponent
+		public IEnumerable<IEntity> GetEntitiesWithComponent<T>() where T : IComponent
 		{
 			return _context.Entities
-				.OfType<T>();
+				.Where(entity => 
+					entity.ContainsComponent<T>() == true);
+		}
+
+
+		public IEnumerable<T> GetComponentsOfType<T>() where T : IComponent
+		{
+			// todo: cache this list probably
+			ICollection<T> components = new List<T>(_context.Entities.Count);
+
+			foreach (IEntity entity in _context.Entities)
+			{
+				if (entity.ContainsComponent<T>())
+				{
+					components.Add(entity.GetComponent<T>());
+				}
+			}
+
+			// done processing, return the collection
+			return components;
 		}
 
 		#endregion

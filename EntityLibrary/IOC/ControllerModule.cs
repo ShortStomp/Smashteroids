@@ -18,7 +18,7 @@ namespace EntityLibrary.IOC
 
 			builder
 				.Register(c =>
-					new RenderableController(c.Resolve<IEntityController>(), c.Resolve<ITextureRepository>()))
+					new RenderableController(c.Resolve<IEntityRepository>(), c.Resolve<ITextureRepository>()))
 				.As<IRenderableController>()
 				.SingleInstance();
 

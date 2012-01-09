@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
 using LogSystem;
 using Microsoft.Xna.Framework.Content;
-using System.IO;
+using Microsoft.Xna.Framework.Graphics;
+using EntityLibrary.Components.Objects;
 
 namespace EntityLibrary.Repositories
 {
@@ -33,7 +33,7 @@ namespace EntityLibrary.Repositories
 			return _textures.Keys.Contains(filename);
 		}
 
-		public void AddTexture(string filename, Texture2D texture)
+		public void CreateTextureForSprite(string filename, Sprite sprite)
 		{
 			if(ContainsTextureWithFilename(filename))
 			{
@@ -45,8 +45,8 @@ namespace EntityLibrary.Repositories
 			}
 
 			// texture is not already present, ok to add
-			_contentManager.Load<Texture2D>("./images/" + filename);
-			_textures.Add(filename, texture);
+			sprite.Texture = _contentManager.Load<Texture2D>("./images/" + filename);
+			_textures.Add(filename, sprite.Texture);
 		}
 
 

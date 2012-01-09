@@ -7,6 +7,8 @@ using EntityLibrary.Controllers.Base;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using EntityLibrary.Components;
+using EntityLibrary.Repositories.EntityRepository;
+using EntityLibrary.Components.Objects;
 
 namespace EntityLibrary.Controllers
 {
@@ -14,16 +16,17 @@ namespace EntityLibrary.Controllers
 	{
 		#region Fields
 
-		private IEntityController _entityController;
+		//private IEntityController _entityController;
+		private IEntityRepository _entityRepository;
 		private ITextureRepository _textureRepository;
 
 		#endregion
 
 		#region Constructors
 
-		internal RenderableController(IEntityController controller, ITextureRepository textureRepo)
+		internal RenderableController(IEntityRepository entityRepo, ITextureRepository textureRepo)
 		{
-			_entityController = controller;
+			_entityRepository = entityRepo;
 			_textureRepository = textureRepo;
 		}
 
@@ -42,11 +45,11 @@ namespace EntityLibrary.Controllers
 
 		#region IRenderableController Members
 
-		public void AddTexture(string filename, Texture2D texture)
+		public void CreateNewTextureForSprite(string filename, Sprite sprite)
 		{
 			if (!_textureRepository.ContainsTextureWithFilename(filename))
 			{
-				_textureRepository.AddTexture(filename, texture);
+				_textureRepository.CreateTextureForSprite(filename, sprite);
 			}
 		}
 
@@ -54,9 +57,9 @@ namespace EntityLibrary.Controllers
 		{
 			spriteBatch.Begin();
 
-			foreach(RenderableComponent rc in _entityController.RenderableComponents())
+			foreach (RenderableComponent rc in _entityRepository.GetComponentsOfType<RenderableComponent>())
 			{
-				spriteBatch.Draw(rc.Sprite.Texture, rc.Sprite.Position, Color.White);
+				spriteBatch.Draw(rc.Sprite.Texture, rc.Position, Color.White);
 			}
 
 			spriteBatch.End();

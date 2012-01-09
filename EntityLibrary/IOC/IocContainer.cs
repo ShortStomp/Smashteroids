@@ -54,6 +54,9 @@ namespace EntityLibrary.IOC
 				.RegisterModule(new FactoryModule());
 
 			builder
+				.RegisterModule(new MessagingModule());
+
+			builder
 				.RegisterModule(new ContextModule());
 
 			builder
