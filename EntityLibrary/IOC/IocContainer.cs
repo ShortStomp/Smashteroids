@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autofac;
-using EntityLibrary.Repositories.EntityRepository;
-using EntityLibrary.Context;
+﻿using Autofac;
+using Autofac.Core;
+using Autofac.Core.Registration;
 using Microsoft.Xna.Framework;
 
 namespace EntityLibrary.IOC
@@ -39,7 +35,18 @@ namespace EntityLibrary.IOC
 		/// <returns></returns>
 		public static T Resolve<T>()
 		{
-			return _container.Resolve<T>();
+			try
+			{
+				return _container.Resolve<T>();
+			}
+			catch (ComponentNotRegisteredException cnre)
+			{
+				throw;
+			}
+			catch (DependencyResolutionException dre)
+			{
+				throw;
+			}
 		}
 
 
@@ -68,8 +75,8 @@ namespace EntityLibrary.IOC
 			// Register the reference to the game.
 			builder
 				.Register(c => _game)
-					.As<Game>()
-					.SingleInstance();
+				.As<Game>()
+				.SingleInstance();
 
 			_container = builder.Build();
 		}

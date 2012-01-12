@@ -90,6 +90,8 @@
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageFactory.cs" />
     <Compile Include="Message\PriorityMessageQueue.cs" />
+    <Compile Include="Message\PQueue\IPriorityQueue.cs" />
+    <Compile Include="Message\PQueue\PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EntityRepository\EntityRepository.cs" />
     <Compile Include="Repositories\EntityRepository\IEntityRepository.cs" />

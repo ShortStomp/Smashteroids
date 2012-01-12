@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityLibrary.Repositories.EntityRepository;
+﻿using EntityLibrary.Controllers.Base;
 using EntityLibrary.Entity;
-using EntityLibrary.Controllers.Base;
 using EntityLibrary.EntityIO;
-using EntityLibrary.Components.Interface;
-using EntityLibrary.Components;
+using EntityLibrary.Repositories.EntityRepository;
 
 namespace EntityLibrary.Controllers
 {
@@ -54,6 +48,7 @@ namespace EntityLibrary.Controllers
 
 		public void CreateEntity()
 		{
+			// TODO: not null
 			_entityRepository.InsertEntity(_entityFactory.CreateEntity(null));
 		}
 

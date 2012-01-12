@@ -9,17 +9,17 @@ namespace EntityLibrary.Components.Objects
 {
 	public class Sprite
 	{
-		#region Public Properties
+		#region Properties
 
-		public Texture2D Texture { get; set; }
-		public string Filename { get; private set; }
+		internal Texture2D Texture { get; set; }
+		internal string Filename { get; private set; }
 
 		#endregion
 
-		#region Public Constructors
+		#region Constructors
 
 		// TODO: make the first parameter an interface
-		public Sprite(string filename)
+		internal Sprite(string filename)
 		{
 			Filename = filename;
 		}

@@ -6,7 +6,7 @@ using EntityLibrary.Controllers.Base;
 
 namespace EntityLibrary.Controllers
 {
-	public class CollidableController : Controller, ICollidableController
+	internal class CollidableController : Controller, ICollidableController
 	{
 		#region Controller Overrides
 

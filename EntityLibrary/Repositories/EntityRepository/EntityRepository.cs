@@ -76,7 +76,7 @@ namespace EntityLibrary.Repositories.EntityRepository
 		public IEnumerable<IEntity> GetEntitiesWithComponent<T>() where T : IComponent
 		{
 			return _context.Entities
-				.Where(entity => 
+				.Where(entity =>
 					entity.ContainsComponent<T>() == true);
 		}
 

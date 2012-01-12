@@ -6,7 +6,7 @@ using EntityLibrary.Controllers.Base;
 
 namespace EntityLibrary.Controllers
 {
-	public class AiController : Controller, IAiController
+	internal class AiController : Controller, IAiController
 	{
 		#region Controller overloads
 

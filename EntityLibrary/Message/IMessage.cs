@@ -7,6 +7,7 @@ namespace EntityLibrary.Message
 {
 	public interface IMessage
 	{
+		bool IsDispatched();
 		void ExecuteMessage();
 		DateTime TimeToDeliver();
 	}

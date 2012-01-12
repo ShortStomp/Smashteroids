@@ -26,5 +26,31 @@
       </Renderable>
     </Components>
   </Entity>
+  <Entity>
+    <Components>
+      <Renderable>
+        <Position>
+          <x>200</x>
+          <y>200</y>
+        </Position>
+        <sprite>
+          <filename>BlueShip</filename>
+        </sprite>
+      </Renderable>
+    </Components>
+  </Entity>
+  <Entity>
+    <Components>
+      <Renderable>
+        <Position>
+          <x>400</x>
+          <y>400</y>
+        </Position>
+        <sprite>
+          <filename>BlueShip</filename>
+        </sprite>
+      </Renderable>
+    </Components>
+  </Entity>
   
 </root>

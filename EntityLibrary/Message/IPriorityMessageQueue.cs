@@ -7,10 +7,7 @@ namespace EntityLibrary.Message
 {
 	public interface IPriorityMessageQueue
 	{
-		bool IsEmpty();
-
 		void AddMessage(IMessage message);
-		void DispatchMessage(IMessage messageToDeliver);
-		IEnumerable<IMessage> PendingMessages();
+		void DispatchPendingMessages();
 	}
 }

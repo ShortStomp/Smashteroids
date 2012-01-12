@@ -9,9 +9,10 @@ namespace EntityLibrary.Message
 	{
 		#region Fields
 
-		internal Delegate _method;
-		internal DateTime _timeToDeliver;
-		internal object[] _args;
+		private Delegate _method;
+		private DateTime _timeToDeliver;
+		private object[] _args;
+		private bool _dispatched;
 
 		#endregion
 
@@ -28,11 +29,18 @@ namespace EntityLibrary.Message
 			// using reflection to figure out the parameters. This will definately need to be changed
 			// when performance starts to become a problem.
 			_method.DynamicInvoke(_args);
+			_dispatched = true;
 		}
 
 		public DateTime TimeToDeliver()
 		{
 			return _timeToDeliver;
 		}
+
+		public bool IsDispatched()
+		{
+			return _dispatched;
+		}
+
 	}
 }

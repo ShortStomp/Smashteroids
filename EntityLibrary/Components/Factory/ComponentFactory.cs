@@ -36,15 +36,8 @@ namespace EntityLibrary.Components.Factory
 			if (typeof(T) == typeof(RenderableComponent))
 			{
 				var rc =  ParseRenderableComponent(xComponent);
-
-
 				_messageFactory.CreateAndSendMessage(
 					(Action<string, Sprite>)_renderableController.CreateNewTextureForSprite, DateTime.Now, rc.Sprite.Filename, rc.Sprite);
-				
-				//_messageFactory.CreateAndSendMessage((Controller)_messageFactory.RenderableControllerReference());
-				// add the texture to the texture repository
-				// TODO: send message to the renderable controller, telling it to add the texture.
-				//_renderableController.AddTexture(rc.Sprite.Filename, rc.Sprite.Texture);
 
 				return rc;
 			}

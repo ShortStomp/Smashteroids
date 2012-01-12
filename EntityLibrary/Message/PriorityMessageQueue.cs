@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using EntityLibrary.Message.PQueue;
 
 namespace EntityLibrary.Message
 {
@@ -9,7 +8,7 @@ namespace EntityLibrary.Message
 	{
 		#region Fields
 
-		SortedList<DateTime, IMessage> _messageQueue;
+		IPriorityQueue<DateTime, IMessage> _messageQueue;
 
 		#endregion
 
@@ -17,37 +16,46 @@ namespace EntityLibrary.Message
 
 		internal PriorityMessageQueue()
 		{
-			_messageQueue = new SortedList<DateTime, IMessage>();
+			_messageQueue = new PriorityQueue<DateTime, IMessage>();
 		}
 
 		#endregion
 
 		public void AddMessage(IMessage message)
 		{
-			_messageQueue.Add(message.TimeToDeliver(), message);
+			if (message == null) { throw new ArgumentNullException("message"); }
+			_messageQueue.Enqueue(message.TimeToDeliver(), message);
 		}
 
-		public bool IsEmpty()
+
+		public void DispatchPendingMessages()
 		{
-			return !_messageQueue.Any();
+			foreach (var pendingMessage in PendingMessages())
+			{
+				DispatchMessage(pendingMessage);
+			}
 		}
 
-		public void DispatchMessage(IMessage messageToDeliver)
+
+		private void DispatchMessage(IMessage messageToDeliver)
 		{
 			messageToDeliver.ExecuteMessage();
 		}
 
-		public IEnumerable<IMessage> PendingMessages()
+
+		private IEnumerable<IMessage> PendingMessages()
 		{
 			ICollection<IMessage> temp = new List<IMessage>();
-			var j = _messageQueue.TakeWhile(x => x.Key <= DateTime.Now);
+			var msg = _messageQueue.Dequeue();
 
-			foreach (var pair in j)
+			// get all the messages that are past due
+			while (msg != default(IMessage) && (msg.TimeToDeliver() <= DateTime.Now))
 			{
-				temp.Add(pair.Value);
+				temp.Add(msg);
+				msg = _messageQueue.Dequeue();
 			}
 
 			return temp;
-		}
+		}		
 	}
 }

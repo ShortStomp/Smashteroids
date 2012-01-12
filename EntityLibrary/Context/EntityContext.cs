@@ -13,7 +13,7 @@ namespace EntityLibrary.Context
 
 		#region Contructors
 
-		internal EntityContext()
+		public EntityContext()
 		{
 			Entities = new List<IEntity>();
 		}

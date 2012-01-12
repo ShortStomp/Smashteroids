@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using EntityLibrary.Repositories.EntityRepository;
 using EntityLibrary.Controllers;
 using EntityLibrary.Entity;
 using EntityLibrary.Repositories;
+using EntityLibrary.Repositories.EntityRepository;
 
 namespace EntityLibrary.IOC
 {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EntityLibrary.Controllers.Base
 {
-	public abstract class Controller
+	internal abstract class Controller
 	{
 		protected Controller()
 		{

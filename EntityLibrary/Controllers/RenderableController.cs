@@ -16,7 +16,6 @@ namespace EntityLibrary.Controllers
 	{
 		#region Fields
 
-		//private IEntityController _entityController;
 		private IEntityRepository _entityRepository;
 		private ITextureRepository _textureRepository;
 

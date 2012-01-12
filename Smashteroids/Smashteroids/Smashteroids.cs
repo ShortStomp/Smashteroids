@@ -1,10 +1,10 @@
-using EntityLibrary.Controllers;
 using EntityLibrary.IOC;
+using EntityLibrary.Message;
 using LogSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using EntityLibrary.Message;
+using EntityLibrary.Controllers;
 
 namespace Smashteroids
 {
@@ -24,7 +24,7 @@ namespace Smashteroids
 		private IAiController _aiController;
 		private ICollidableController _collidableController;
 
-		// entity messaging system
+		// Entity messaging system
 		private IPriorityMessageQueue _entityMessagingSystem;
 
 		#endregion
@@ -53,16 +53,15 @@ namespace Smashteroids
 			// Create a new SpriteBatch, which can be used to draw textures.
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			// TODO: Add your initialization logic here
-
 			// Resolve controllers
 			_entityController = IocContainer.Resolve<IEntityController>();
 			_renderableController = IocContainer.Resolve<IRenderableController>();
 			_aiController = IocContainer.Resolve<IAiController>();
 			_collidableController = IocContainer.Resolve<ICollidableController>();
 
-			// resolve messaging system
+			// Resolve messaging system
 			_entityMessagingSystem = IocContainer.Resolve<IPriorityMessageQueue>();
+
 
 			base.Initialize();
 		}
@@ -96,16 +95,7 @@ namespace Smashteroids
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
 				this.Exit();
 
-			/* for now, we're only processing 1 message per update.
-			 * if this is moved to a worker-thread, it could become intersting */
-			if (!_entityMessagingSystem.IsEmpty())
-			{
-				foreach (var t in _entityMessagingSystem.PendingMessages())
-				{
-					_entityMessagingSystem.DispatchMessage(t);
-				}
-				//_entityMessagingSystem.DispatchMessage();
-			}
+			_entityMessagingSystem.DispatchPendingMessages();
 
 			// TODO: Add your update logic here
 			//_aiController.Do();
