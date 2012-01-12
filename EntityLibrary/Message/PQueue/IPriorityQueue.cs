@@ -9,6 +9,8 @@ namespace EntityLibrary.Message.PQueue
 	{
 		void Enqueue(TKey priority, TValue value);
 		bool IsEmpty();
+		int Count { get; }
+
 		TValue Peek();
 		TValue Dequeue();
 	}

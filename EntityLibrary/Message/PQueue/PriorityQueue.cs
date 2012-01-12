@@ -15,6 +15,18 @@ namespace EntityLibrary.Message.PQueue
 
 		#endregion
 
+		#region Properties
+
+		public int Count 
+		{ 
+			get 
+			{
+				return IsEmpty() ? 0 : _queue.SelectMany(x => x.Value).Count();
+			} 
+		}
+
+		#endregion
+
 		#region Constructors
 
 		public PriorityQueue()
@@ -29,6 +41,8 @@ namespace EntityLibrary.Message.PQueue
 		public void Enqueue(TKey priority, TValue value)
 		{
 			if (priority == null) { throw new ArgumentNullException("priority"); }
+
+			if (value == null) { throw new ArgumentNullException("value"); }
 
 			if (_queue.ContainsKey(priority))
 			{

@@ -12,14 +12,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSystem", "LogSystem\LogS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityLibrary", "EntityLibrary\EntityLibrary.csproj", "{2763BE88-8FEF-4A46-ACD4-F1E710CF3AA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityLibraryTest.cs", "EntityLibraryTest.cs\EntityLibraryTest.cs.csproj", "{B1310812-DE51-4B65-8EEB-1AB261D781EE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6FB4437-E766-4EAB-96CA-B65B7792D5BB}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		Smashteroids1.vsmdi = Smashteroids1.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityLibraryTest", "EntityLibraryTest\EntityLibraryTest.csproj", "{B1310812-DE51-4B65-8EEB-1AB261D781EE}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
