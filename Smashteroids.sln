@@ -12,7 +12,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogSystem", "LogSystem\LogS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityLibrary", "EntityLibrary\EntityLibrary.csproj", "{2763BE88-8FEF-4A46-ACD4-F1E710CF3AA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityLibraryTest.cs", "EntityLibraryTest.cs\EntityLibraryTest.cs.csproj", "{B1310812-DE51-4B65-8EEB-1AB261D781EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6FB4437-E766-4EAB-96CA-B65B7792D5BB}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Smashteroids1.vsmdi = Smashteroids1.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Smashteroids1.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -58,6 +70,16 @@ Global
 		{2763BE88-8FEF-4A46-ACD4-F1E710CF3AA1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2763BE88-8FEF-4A46-ACD4-F1E710CF3AA1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2763BE88-8FEF-4A46-ACD4-F1E710CF3AA1}.Release|x86.ActiveCfg = Release|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B1310812-DE51-4B65-8EEB-1AB261D781EE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

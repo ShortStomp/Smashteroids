@@ -131,8 +131,9 @@
       <Name>LogSystem</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmashteroidsContent\SmashteroidsContent.contentproj">
-      <Name>SmashteroidsContent</Name>
+      <Name>SmashteroidsContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{9A3D8A95-F630-487F-AC96-3A73574387ED}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
