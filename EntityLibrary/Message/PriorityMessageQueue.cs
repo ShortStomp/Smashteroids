@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using EntityLibrary.Message.PQueue;
 
@@ -25,6 +26,12 @@ namespace EntityLibrary.Message
 		{
 			if (message == null) { throw new ArgumentNullException("message"); }
 			_messageQueue.Enqueue(message.TimeToDeliver(), message);
+		}
+
+
+		public int PendingMessageCount
+		{
+			get { return PendingMessages().Count(); }
 		}
 
 
@@ -56,6 +63,6 @@ namespace EntityLibrary.Message
 			}
 
 			return temp;
-		}		
+		}
 	}
 }

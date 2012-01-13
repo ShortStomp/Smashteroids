@@ -9,5 +9,7 @@ namespace EntityLibrary.Message
 	{
 		void AddMessage(IMessage message);
 		void DispatchPendingMessages();
+
+		int PendingMessageCount { get; }
 	}
 }

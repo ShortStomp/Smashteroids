@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Autofac;
 using EntityLibrary.Message;
+using EntityLibrary.Message.PQueue;
 
 namespace EntityLibrary.IOC
 {
@@ -12,7 +13,13 @@ namespace EntityLibrary.IOC
 		protected override void Load(ContainerBuilder builder)
 		{
 			builder
-				.Register(c => new PriorityMessageQueue())
+				.Register(c => new PriorityQueue<DateTime, IMessage>())
+				.As<IPriorityQueue<DateTime, IMessage>>()
+				.SingleInstance();
+
+			builder
+				.Register(c => 
+					c.Resolve<IPriorityQueue<DateTime, IMessage>>())
 				.As<IPriorityMessageQueue>()
 				.SingleInstance();
 
