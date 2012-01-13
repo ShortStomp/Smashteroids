@@ -14,9 +14,9 @@ namespace EntityLibrary.Message
 
 		#region Constructors
 
-		internal PriorityMessageQueue()
+		internal PriorityMessageQueue(IPriorityQueue<DateTime, IMessage> priorityQueue)
 		{
-			_messageQueue = new PriorityQueue<DateTime, IMessage>();
+			_messageQueue = priorityQueue;
 		}
 
 		#endregion
