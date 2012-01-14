@@ -4,21 +4,53 @@
     <Components>
       <Renderable>
         <sprite>
-          <position>
+          <rectangle>
             <x>100</x>
-            <y>300</y>
-          </position>
-          <rotation>45</rotation>
+            <y>100</y>
+            <w>64</w>
+            <h>64</h>
+          </rectangle>
+          <rotation>0</rotation>
           <color>
-            <r>165</r>
-            <g>79</g>
-            <b>0</b>
-            <a>210</a>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>50</a>
           </color>
           <scale>2.6</scale>
           <filename>BlueShip</filename>
         </sprite>
       </Renderable>
+      <Player>
+        <name>Player1</name>
+      </Player>
+    </Components>
+  </Entity>
+
+  <Entity>
+    <Components>
+      <Renderable>
+        <sprite>
+          <rectangle>
+            <x>200</x>
+            <y>200</y>
+            <w>64</w>
+            <h>64</h>
+          </rectangle>
+          <rotation>0</rotation>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>50</a>
+          </color>
+          <scale>2.6</scale>
+          <filename>RedShip</filename>
+        </sprite>
+      </Renderable>
+      <Player>
+        <name>Player1</name>
+      </Player>
     </Components>
   </Entity>
   

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Linq;
 using EntityLibrary.Components.Interface;
 using EntityLibrary.Components.Objects;
 using EntityLibrary.Controllers;
+using EntityLibrary.Extensions;
 using EntityLibrary.Message;
 using LogSystem;
-using EntityLibrary.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,16 +18,18 @@ namespace EntityLibrary.Components.Factory
 
 		private IMessageFactory _messageFactory;
 		private IRenderableController _renderableController;
+		private IPlayerController _playerController;
 		private XElement _currentComponent;
 
 		#endregion
 
 		#region Constructors
 
-		internal ComponentFactory(IMessageFactory factory, IRenderableController rc)
+		internal ComponentFactory(IMessageFactory factory, IRenderableController rc, IPlayerController pc)
 		{
 			_messageFactory = factory;
 			_renderableController = rc;
+			_playerController = pc;
 		}
 
 		#endregion
@@ -40,6 +43,7 @@ namespace EntityLibrary.Components.Factory
 			{
 				EntityIoLogger.WriteNullArgumentIoException(new ArgumentNullException("xComponent"), IoType.Component, -1);
 			}
+
 			// Reset the component counter and the pointer to the current component we are parsing
 			_currentComponent = xComponent;
 
@@ -49,6 +53,14 @@ namespace EntityLibrary.Components.Factory
 				_messageFactory.CreateAndSendMessage(
 					(Action<string, Sprite>)_renderableController.CreateNewTextureForSprite, DateTime.Now, rc.Sprite.Filename, rc.Sprite);
 				return rc;
+			}
+			else if (typeof(T) == typeof(PlayerComponent))
+			{
+				var pc = ParsePlayerComponent(xComponent);
+				_messageFactory.CreateAndSendMessage(
+					(Action<Player>)_playerController.AddPlayer, DateTime.Now, pc.Player);
+
+				return pc;
 			}
 
 			throw new InvalidOperationException(
@@ -80,6 +92,25 @@ namespace EntityLibrary.Components.Factory
 		}
 
 
+		private PlayerComponent ParsePlayerComponent(XElement xPlayerComponent)
+		{
+			EntityIoLogger.WriteIoInformation(xPlayerComponent, IoType.Component, _currentComponent.LineNumber());
+
+			try
+			{
+				return new PlayerComponent()
+				{
+					Player = new Player() { _name = xPlayerComponent.Element("name").Value }
+				};
+			}
+			catch (Exception e)
+			{
+				EntityIoLogger.WriteFatalIOException(e, xPlayerComponent, IoType.Component, _currentComponent.LineNumber());
+				return default(PlayerComponent);
+			}
+		}
+
+
 
 		/// <summary>
 		/// Parses an xml sprite
@@ -90,18 +121,24 @@ namespace EntityLibrary.Components.Factory
 		{
 			EntityIoLogger.WriteIoInformation(spriteElement, IoType.Component, _currentComponent.LineNumber());
 
-			return new Sprite(spriteElement.Element("filename").Value)
+			var sprite = new Sprite(spriteElement.Element("filename").Value)
 			{
-				Position = ParseVector2(spriteElement.Element("position"), "position"),
+				DestRect = ParseRectangle(spriteElement.Element("rectangle"), "rectangle"),
 				SourceRect = ParseNullableRectangle(spriteElement.Element("texturerect"), "texturerect"),
 				Color = ParseColor(spriteElement.Element("color"), "color"),
 				Rotatation = ParseFloat(spriteElement.Element("rotation"), "rotation"),
-				Origin = ParseVector2(spriteElement.Element("origin"), "origin"),
 				Scale = ParseFloat(spriteElement.Element("scale"), "scale", 1.0f),
 				SpriteEffect = ParseSpriteEffects(spriteElement.Element("spriteeffects")),
 				DepthLayer = ParseFloat(spriteElement.Element("depth"), "depth"),
-
 			};
+			
+			/* If the origin is set in the XML file, use that. Otherwise,
+			 * default to the middle of the sprite. */
+			sprite.Origin = spriteElement.Element("origin") == null
+				? new Vector2(sprite.DestRect.Width / 2, sprite.DestRect.Height / 2)
+				: ParseVector2(spriteElement.Element("origin"), "origin");
+
+			return sprite;
 		}
 
 
@@ -202,6 +239,18 @@ namespace EntityLibrary.Components.Factory
 				return default(Rectangle?);
 			}
 
+			return ParseRectangle(xRectangleElement, valueName);
+		}
+
+
+		private Rectangle ParseRectangle(XElement xRectangleElement, string valueName)
+		{
+			if (xRectangleElement == null)
+			{
+				EntityIoLogger.WriteIoUnspecifiedComponentProperty(_currentComponent, valueName, _currentComponent.LineNumber());
+				return default(Rectangle);
+			}
+
 			EntityIoLogger.WriteIoInformation(xRectangleElement, IoType.Component, _currentComponent.LineNumber());
 
 			return new Rectangle()
@@ -209,10 +258,9 @@ namespace EntityLibrary.Components.Factory
 				X = Int32.Parse(xRectangleElement.Element("x").Value),
 				Y = Int32.Parse(xRectangleElement.Element("y").Value),
 
-				Height = Int32.Parse(xRectangleElement.Element("height").Value),
-				Width = Int32.Parse(xRectangleElement.Element("width").Value)
+				Height = Int32.Parse(xRectangleElement.Element("h").Value),
+				Width = Int32.Parse(xRectangleElement.Element("w").Value)
 			};
-
 		}
 
 

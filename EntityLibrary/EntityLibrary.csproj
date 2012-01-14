@@ -58,7 +58,9 @@
     <Compile Include="Components\Factory\ComponentFactory.cs" />
     <Compile Include="Components\Factory\IComponentFactory.cs" />
     <Compile Include="Components\Interface\Component.cs" />
+    <Compile Include="Components\Objects\Player.cs" />
     <Compile Include="Components\Objects\Sprite.cs" />
+    <Compile Include="Components\PlayerComponent.cs" />
     <Compile Include="Components\RenderableComponent.cs" />
     <Compile Include="Context\EntityContext.cs" />
     <Compile Include="Context\IEntityContext.cs" />
@@ -69,7 +71,9 @@
     <Compile Include="Controllers\EntityController\IEntityController.cs" />
     <Compile Include="Controllers\IAiController.cs" />
     <Compile Include="Controllers\ICollidableController.cs" />
+    <Compile Include="Controllers\IPlayerController.cs" />
     <Compile Include="Controllers\IRenderableController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\RenderableController.cs" />
     <Compile Include="EntityIO\Data\EntityData.cs" />
     <Compile Include="EntityIO\EntityParser.cs" />

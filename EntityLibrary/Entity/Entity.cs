@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EntityLibrary.Components.Interface;
 using LogSystem;
+using EntityLibrary.Components;
 
 namespace EntityLibrary.Entity
 {
@@ -26,40 +27,70 @@ namespace EntityLibrary.Entity
 
 		#endregion
 
+		#region Private Members
+
+		private void ResolveComponentDependencies()
+		{
+			var r = Components.Where(c => c.GetType() == typeof(RenderableComponent));
+			var p = Components.Where(c => c.GetType() == typeof(PlayerComponent));
+
+			// if the entity has both renderable component and a player component
+			if (r.Any() && p.Any())
+			{
+				(p.FirstOrDefault() as PlayerComponent).Player._sprite = (r.FirstOrDefault() as RenderableComponent).Sprite;
+			}
+
+			// otherwise we need to check if we need to remove any dependences (ie when removing a component dynamically)
+			else
+			{
+				// if there is a player, and no renderable component
+				// NOTE: the !r.any() is unnecessary for now, but leaving it in for when we expand this system.
+				if (p.Any() && !r.Any())
+				{
+					(r.FirstOrDefault() as RenderableComponent).Sprite = null;
+				}
+			}
+		}
+
+		#endregion
 
 		#region IEntity Members
 
 		public void AddComponent(IComponent component)
 		{
-			//if (ContainsComponent(component))
-			//{
-			//    Logger.WriteExceptionThenQuit(
-			//        MessageType.RuntimeException,
-			//        new InvalidOperationException(
-			//            string.Format("Attempting to add already existing component {0} to entity {1}",
-			//            component.ToString(), this.ToString()))
-			//    );
-			//}
+			if (ContainsComponent(component))
+			{
+				DefaultLogger.WriteExceptionThenQuit(
+					MessageType.RuntimeException,
+					new InvalidOperationException(
+						string.Format("Attempting to add already existing component {0} to entity {1}",
+						component.ToString(), this.ToString()))
+				);
+			}
 
 			// safe to attach component to entity
 			Components.Add(component);
+
+			ResolveComponentDependencies();
 		}
 
 
 		public void RemoveComponent(IComponent component)
 		{
-			//if (!ContainsComponent<Components.GetType()>())
-			//{
-			//    Logger.WriteExceptionThenQuit(
-			//        MessageType.RuntimeException,
-			//        new InvalidOperationException(
-			//            string.Format("Attempting to remove non-existing component {0} to entity {1}.",
-			//            component.ToString(), this.ToString()))
-			//    );
-			//}
+			if (!ContainsComponent(component))
+			{
+				DefaultLogger.WriteExceptionThenQuit(
+			        MessageType.RuntimeException,
+			        new InvalidOperationException(
+			            string.Format("Attempting to remove non-existing component {0} to entity {1}.",
+			            component.ToString(), this.ToString()))
+			    );
+			}
 
 			// safe to remove component
 			Components.Remove(component);
+
+			ResolveComponentDependencies();
 		}
 
 
@@ -68,10 +99,11 @@ namespace EntityLibrary.Entity
 		/// </summary>
 		/// <param name="component"></param>
 		/// <returns></returns>
-		public bool ContainsComponent<T>() where T : IComponent
+		public bool ContainsComponent(IComponent component)
 		{
 			return Components
-				.OfType<T>().Any();
+				.Where(c => c.GetType() == component.GetType())
+				.Any();
 		}
 
 
@@ -90,6 +122,14 @@ namespace EntityLibrary.Entity
 		public IEnumerable<IComponent> GetComponents()
 		{
 			return Components;
+		}
+
+
+		public bool ContainsComponent<T>() where T : IComponent
+		{
+			return Components
+				.OfType<T>()
+				.Any();
 		}
 
 		#endregion

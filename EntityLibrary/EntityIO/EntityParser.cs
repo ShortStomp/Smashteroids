@@ -39,6 +39,11 @@ namespace EntityLibrary.EntityIO
 		}
 
 
+
+		/// <summary>
+		/// Public Interface, for loading all the entities. 
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<EntityData> LoadEntities()
 		{
 			if (!_fileOpened)
@@ -53,13 +58,20 @@ namespace EntityLibrary.EntityIO
 		}
 
 
+
+		/// <summary>
+		/// Parses all of the entities into a collection of EntityData
+		/// </summary>
+		/// <param name="entityCollection">The entity collection.</param>
+		/// <returns></returns>
 		private IEnumerable<EntityData> ParseEntities(IEnumerable<XElement> entityCollection)
 		{
 			ICollection<EntityData> entities = new List<EntityData>(entityCollection.Count());
 
 			foreach (var xEntity in entityCollection)
 			{
-				entities.Add(ParseEntity(xEntity));
+				var parsedEntity = ParseEntity(xEntity);
+				entities.Add(parsedEntity);
 				++_entityNumber;
 			}
 
@@ -67,41 +79,37 @@ namespace EntityLibrary.EntityIO
 		}
 
 
+
+		/// <summary>
+		/// Parses a single entity into an Entitydata object.
+		/// </summary>
+		/// <param name="xEntity">The x entity.</param>
+		/// <returns></returns>
 		private EntityData ParseEntity(XElement xEntity)
 		{
 			if (xEntity == null)
 			{
 				EntityIoLogger.WriteNullArgumentIoException(new ArgumentNullException(xEntity.ToString()), IoType.Component, _entityNumber);
 			}
+
 			EntityIoLogger.WriteIoInformation(xEntity, IoType.Entity, _entityNumber);
 			ICollection<IComponent> components = new List<IComponent>();
 
+			var xComponents = xEntity.Descendants("Components");
 
-			foreach (var xComponent in xEntity.Descendants("Components"))
+			var xRenderable = xComponents.Descendants("Renderable");
+			var xPlayer = xComponents.Descendants("Player");
+
+			if (xRenderable.Any())
 			{
-				components.Add(ParseComponent(xComponent));
+				components.Add(_componentFactory.CreateComponent<RenderableComponent>(xRenderable.FirstOrDefault()));
+			}
+			if (xPlayer.Any())
+			{
+				components.Add(_componentFactory.CreateComponent<PlayerComponent>(xPlayer.FirstOrDefault()));
 			}
 
 			return new EntityData() { Components = components };
-
-		}
-
-
-		private IComponent ParseComponent(XElement xComponent)
-		{
-			EntityIoLogger.WriteIoInformation(xComponent, IoType.Component, _entityNumber);
-
-			try
-			{
-				return _componentFactory
-					.CreateComponent<RenderableComponent>(xComponent.Descendants("Renderable")
-					.SingleOrDefault());
-			}
-			catch (Exception exception)
-			{
-				EntityIoLogger.WriteFatalIOException(exception, xComponent, IoType.Component, _entityNumber);
-				throw;
-			}
 		}
 	}
 }

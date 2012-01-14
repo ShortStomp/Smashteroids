@@ -52,17 +52,17 @@ namespace EntityLibrary.Message
 
 		private IEnumerable<IMessage> PendingMessages()
 		{
-			ICollection<IMessage> temp = new List<IMessage>();
+			ICollection<IMessage> pendingMessages = new List<IMessage>();
 			var msg = _messageQueue.Dequeue();
 
 			// get all the messages that are past due
 			while (msg != default(IMessage) && (msg.TimeToDeliver() <= DateTime.Now))
 			{
-				temp.Add(msg);
+				pendingMessages.Add(msg);
 				msg = _messageQueue.Dequeue();
 			}
 
-			return temp;
+			return pendingMessages;
 		}
 	}
 }

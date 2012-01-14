@@ -15,11 +15,12 @@ namespace EntityLibrary.Components.Objects
 		private float _rotation;
 
 		#endregion
+
 		#region Properties
 
 		internal Texture2D Texture { get; set; }
 		internal string Filename { get; private set; }
-		internal Vector2 Position { get; set; }
+		internal Rectangle DestRect { get; set; }
 		internal Rectangle? SourceRect { get; set; }
 		internal Color Color { get; set; }
 

@@ -23,6 +23,7 @@ namespace Smashteroids
 		private IRenderableController _renderableController;
 		private IAiController _aiController;
 		private ICollidableController _collidableController;
+		private IPlayerController _playerController;
 
 		// Entity messaging system
 		private IPriorityMessageQueue _entityMessagingSystem;
@@ -59,6 +60,7 @@ namespace Smashteroids
 			_renderableController = IocContainer.Resolve<IRenderableController>();
 			_aiController = IocContainer.Resolve<IAiController>();
 			_collidableController = IocContainer.Resolve<ICollidableController>();
+			_playerController = IocContainer.Resolve<IPlayerController>();
 
 			// Resolve messaging system
 			_entityMessagingSystem = IocContainer.Resolve<IPriorityMessageQueue>();
@@ -94,11 +96,18 @@ namespace Smashteroids
 		{
 			// Allows the game to exit
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+			{
 				this.Exit();
+			}
+			if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+			{
+				this.Exit();
+			}
 
 			_entityMessagingSystem.DispatchPendingMessages();
 
 			// TODO: Add your update logic here
+			_playerController.UpdatePlayer();
 			//_aiController.Do();
 			//_collidableController.Do();
 

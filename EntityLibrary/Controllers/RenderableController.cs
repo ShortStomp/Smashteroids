@@ -55,12 +55,11 @@ namespace EntityLibrary.Controllers
 			{
 				spriteBatch.Draw(
 					rc.Sprite.Texture,
-					rc.Sprite.Position,
+					rc.Sprite.DestRect,
 					rc.Sprite.SourceRect,
 					rc.Sprite.Color,
 					rc.Sprite.Rotatation,
 					rc.Sprite.Origin,
-					rc.Sprite.Scale,
 					rc.Sprite.SpriteEffect,
 					rc.Sprite.DepthLayer);
 			}

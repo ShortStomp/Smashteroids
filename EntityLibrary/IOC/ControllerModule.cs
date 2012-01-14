@@ -3,6 +3,7 @@ using EntityLibrary.Controllers;
 using EntityLibrary.Entity;
 using EntityLibrary.Repositories;
 using EntityLibrary.Repositories.EntityRepository;
+using Microsoft.Xna.Framework;
 
 namespace EntityLibrary.IOC
 {
@@ -31,6 +32,11 @@ namespace EntityLibrary.IOC
 				.Register(c => new CollidableController())
 				.As<ICollidableController>()
 				.SingleInstance();
+
+			builder
+				.Register(c => new PlayerController())
+					.As<IPlayerController>()
+					.SingleInstance();
 
 			base.Load(builder);
 		}
