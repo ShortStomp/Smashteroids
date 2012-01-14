@@ -44,8 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityIoLogger.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="DefaultLogger.cs" />
     <Compile Include="LoggerMessageType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

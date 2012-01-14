@@ -3,50 +3,19 @@
   <Entity>
     <Components>
       <Renderable>
-        <Position>
-          <x>100</x>
-          <y>300</y>
-        </Position>
         <sprite>
-          <filename>BlueShip</filename>
-        </sprite>
-      </Renderable>
-    </Components>
-  </Entity>
-  <Entity>
-    <Components>
-      <Renderable>
-        <Position>
-          <x>300</x>
-          <y>100</y>
-        </Position>
-        <sprite>
-          <filename>BlueShip</filename>
-        </sprite>
-      </Renderable>
-    </Components>
-  </Entity>
-  <Entity>
-    <Components>
-      <Renderable>
-        <Position>
-          <x>200</x>
-          <y>200</y>
-        </Position>
-        <sprite>
-          <filename>BlueShip</filename>
-        </sprite>
-      </Renderable>
-    </Components>
-  </Entity>
-  <Entity>
-    <Components>
-      <Renderable>
-        <Position>
-          <x>400</x>
-          <y>400</y>
-        </Position>
-        <sprite>
+          <position>
+            <x>100</x>
+            <y>300</y>
+          </position>
+          <rotation>45</rotation>
+          <color>
+            <r>165</r>
+            <g>79</g>
+            <b>0</b>
+            <a>210</a>
+          </color>
+          <scale>2.6</scale>
           <filename>BlueShip</filename>
         </sprite>
       </Renderable>

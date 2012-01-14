@@ -1,4 +1,5 @@
 using System;
+using LogSystem;
 
 namespace Smashteroids
 {
@@ -13,7 +14,19 @@ namespace Smashteroids
 		{
 			using (Instance instance = new Instance())
 			{
-				instance.Run();
+				try
+				{
+					instance.Run();
+				}
+				catch (Exception e)
+				{
+					if (EntityIoLogger.FatalExceptionCaught)
+					{
+						DefaultLogger.WriteExceptionThenQuit(MessageType.UncaughtRuntimeException, e, "Caught in main program.cs");
+						DefaultLogger.Close();
+						instance.Exit();
+					}
+				}
 			}
 		}
 	}

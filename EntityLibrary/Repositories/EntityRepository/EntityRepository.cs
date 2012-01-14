@@ -36,7 +36,7 @@ namespace EntityLibrary.Repositories.EntityRepository
 		{
 			if (_context.Entities.Contains(entity))
 			{
-				Logger.WriteExceptionThenQuit(
+				DefaultLogger.WriteExceptionThenQuit(
 					MessageType.RuntimeException,
 					new InvalidOperationException(
 						string.Format("Attempting to add already existing entity {0} to entity repository",
@@ -60,7 +60,7 @@ namespace EntityLibrary.Repositories.EntityRepository
 		{
 			if (!_context.Entities.Contains(entity))
 			{
-				Logger.WriteExceptionThenQuit(
+				DefaultLogger.WriteExceptionThenQuit(
 					MessageType.RuntimeException,
 					new InvalidOperationException(
 						string.Format("Attempting to remove entity {0} which is not in the entity repository.",

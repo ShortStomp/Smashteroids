@@ -39,11 +39,11 @@ namespace EntityLibrary.IOC
 			{
 				return _container.Resolve<T>();
 			}
-			catch (ComponentNotRegisteredException cnre)
+			catch (ComponentNotRegisteredException)
 			{
 				throw;
 			}
-			catch (DependencyResolutionException dre)
+			catch (DependencyResolutionException)
 			{
 				throw;
 			}

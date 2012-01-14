@@ -45,7 +45,8 @@ namespace Smashteroids
 		protected override void Initialize()
 		{
 			// Initialize the logger system
-			Logger.Initialize(this);
+			DefaultLogger.Initialize(this, "../../../DefaultLog.txt");
+			EntityIoLogger.Initialize("../../../IoLogfile.txt");
 
 			// Give the IOC container a refence to the game.
 			IocContainer.SetGameReference(this);
@@ -125,8 +126,8 @@ namespace Smashteroids
 		/// <param name="args"></param>
 		protected override void OnExiting(object sender, System.EventArgs args)
 		{
-			Logger.Write(MessageType.Information, "Shutting engine down ....", 1);
-			Logger.Close();
+			DefaultLogger.Write(MessageType.Information, "Shutting engine down normally ....", 1);
+			DefaultLogger.Close();
 			base.OnExiting(sender, args);
 		}
 	}

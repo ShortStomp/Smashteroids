@@ -57,7 +57,7 @@ namespace EntityLibrary.Repositories
 			}
 			catch (Exception e)
 			{
-				Logger.WriteExceptionThenQuit(MessageType.RuntimeException, e);
+				DefaultLogger.WriteExceptionThenQuit(MessageType.RuntimeException, e);
 				// TODO: log specific exception
 				throw;
 			}

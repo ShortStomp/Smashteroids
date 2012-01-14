@@ -8,6 +8,14 @@
 		FileIOInfo,
 		Warning,
 		Information,
-		Continued
+		Continued,
+		UncaughtRuntimeException
+	}
+
+	public enum IoType
+	{
+		Entity,
+		Component,
+		XmlDoc
 	}
 }

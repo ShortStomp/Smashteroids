@@ -26,3 +26,5 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 /Smashteroids/Smashteroids/Logfile.txt
+/Smashteroids/Smashteroids/DefaultLog.txt
+/Smashteroids/Smashteroids/IoLogfile.txt

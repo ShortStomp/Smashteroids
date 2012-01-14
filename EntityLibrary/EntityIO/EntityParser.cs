@@ -16,6 +16,7 @@ namespace EntityLibrary.EntityIO
 		private IComponentFactory _componentFactory;
 		private XDocument _xmlDoc;
 		private bool _fileOpened;
+		private int _entityNumber;
 
 
 		public EntityParser()
@@ -26,6 +27,13 @@ namespace EntityLibrary.EntityIO
 
 		public void OpenFile(string filename)
 		{
+			if (filename == null || filename == string.Empty)
+			{
+				EntityIoLogger.WriteNullArgumentIoException(
+				new ArgumentNullException("filename", filename == null ? "filename cannot be null" : "filename cannot be nothing"),
+				IoType.XmlDoc,
+				_entityNumber);
+			}
 			_xmlDoc = XDocument.Load(filename, LoadOptions.SetLineInfo);
 			_fileOpened = true;
 		}
@@ -35,7 +43,7 @@ namespace EntityLibrary.EntityIO
 		{
 			if (!_fileOpened)
 			{
-				Logger.WriteExceptionThenQuit(MessageType.FileIOError,
+				DefaultLogger.WriteExceptionThenQuit(MessageType.FileIOError,
 					new InvalidOperationException("EntityParser cannot load entities before file has been opened."));
 			}
 
@@ -52,6 +60,7 @@ namespace EntityLibrary.EntityIO
 			foreach (var xEntity in entityCollection)
 			{
 				entities.Add(ParseEntity(xEntity));
+				++_entityNumber;
 			}
 
 			return entities;
@@ -60,32 +69,27 @@ namespace EntityLibrary.EntityIO
 
 		private EntityData ParseEntity(XElement xEntity)
 		{
-			Logger.WriteIOMessage(xEntity);
+			if (xEntity == null)
+			{
+				EntityIoLogger.WriteNullArgumentIoException(new ArgumentNullException(xEntity.ToString()), IoType.Component, _entityNumber);
+			}
+			EntityIoLogger.WriteIoInformation(xEntity, IoType.Entity, _entityNumber);
 			ICollection<IComponent> components = new List<IComponent>();
 
-			try
+
+			foreach (var xComponent in xEntity.Descendants("Components"))
 			{
-				foreach (var xComponent in xEntity.Descendants("Components"))
-				{
-					components.Add(ParseComponent(xEntity));
-				}
-			}
-			catch (Exception exception)
-			{
-				Logger.WriteFatalIOException(exception, xEntity);
-				throw;
+				components.Add(ParseComponent(xComponent));
 			}
 
-			return new EntityData()
-			{
-				Components = components
-			};
+			return new EntityData() { Components = components };
+
 		}
 
 
 		private IComponent ParseComponent(XElement xComponent)
 		{
-			Logger.WriteIOMessage(xComponent);
+			EntityIoLogger.WriteIoInformation(xComponent, IoType.Component, _entityNumber);
 
 			try
 			{
@@ -93,9 +97,9 @@ namespace EntityLibrary.EntityIO
 					.CreateComponent<RenderableComponent>(xComponent.Descendants("Renderable")
 					.SingleOrDefault());
 			}
-			catch(Exception exception)
+			catch (Exception exception)
 			{
-				Logger.WriteFatalIOException(exception, xComponent);
+				EntityIoLogger.WriteFatalIOException(exception, xComponent, IoType.Component, _entityNumber);
 				throw;
 			}
 		}

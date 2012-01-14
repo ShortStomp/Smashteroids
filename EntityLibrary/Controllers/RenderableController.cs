@@ -40,8 +40,6 @@ namespace EntityLibrary.Controllers
 
 		#endregion
 
-
-
 		#region IRenderableController Members
 
 		public void CreateNewTextureForSprite(string filename, Sprite sprite)
@@ -55,7 +53,16 @@ namespace EntityLibrary.Controllers
 
 			foreach (RenderableComponent rc in _entityRepository.GetComponentsOfType<RenderableComponent>())
 			{
-				spriteBatch.Draw(rc.Sprite.Texture, rc.Position, Color.White);
+				spriteBatch.Draw(
+					rc.Sprite.Texture,
+					rc.Sprite.Position,
+					rc.Sprite.SourceRect,
+					rc.Sprite.Color,
+					rc.Sprite.Rotatation,
+					rc.Sprite.Origin,
+					rc.Sprite.Scale,
+					rc.Sprite.SpriteEffect,
+					rc.Sprite.DepthLayer);
 			}
 
 			spriteBatch.End();
