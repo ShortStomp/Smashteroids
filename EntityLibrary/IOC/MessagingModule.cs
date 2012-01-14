@@ -19,7 +19,7 @@ namespace EntityLibrary.IOC
 
 			builder
 				.Register(c => 
-					c.Resolve<IPriorityQueue<DateTime, IMessage>>())
+					new PriorityMessageQueue(c.Resolve<IPriorityQueue<DateTime, IMessage>>()))
 				.As<IPriorityMessageQueue>()
 				.SingleInstance();
 
