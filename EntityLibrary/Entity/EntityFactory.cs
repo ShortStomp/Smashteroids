@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EntityLibrary.Components.Interface;
+using EntityLibrary.Components.Base;
 
 namespace EntityLibrary.Entity
 {
@@ -7,12 +7,13 @@ namespace EntityLibrary.Entity
 	{
 		#region IEntityFactory Members
 
-		public IEntity CreateEntity(IEnumerable<IComponent> componentCollection)
+		public IEntity CreateEntity(IEnumerable<Component> componentCollection)
 		{
 			IEntity entity = new Entity();
 
-			foreach (IComponent component in componentCollection)
+			foreach (Component component in componentCollection)
 			{
+				component.Entity = entity;
 				entity.AddComponent(component);
 			}
 

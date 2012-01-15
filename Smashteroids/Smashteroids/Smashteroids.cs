@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using EntityLibrary.Controllers;
+using System;
 
 namespace Smashteroids
 {
@@ -23,7 +24,7 @@ namespace Smashteroids
 		private IRenderableController _renderableController;
 		private IAiController _aiController;
 		private ICollidableController _collidableController;
-		private IPlayerController _playerController;
+		private IInteractiveController _playerController;
 
 		// Entity messaging system
 		private IPriorityMessageQueue _entityMessagingSystem;
@@ -60,7 +61,7 @@ namespace Smashteroids
 			_renderableController = IocContainer.Resolve<IRenderableController>();
 			_aiController = IocContainer.Resolve<IAiController>();
 			_collidableController = IocContainer.Resolve<ICollidableController>();
-			_playerController = IocContainer.Resolve<IPlayerController>();
+			_playerController = IocContainer.Resolve<IInteractiveController>();
 
 			// Resolve messaging system
 			_entityMessagingSystem = IocContainer.Resolve<IPriorityMessageQueue>();
@@ -107,7 +108,7 @@ namespace Smashteroids
 			_entityMessagingSystem.DispatchPendingMessages();
 
 			// TODO: Add your update logic here
-			_playerController.UpdatePlayer();
+			_playerController.UpdatePlayer(gameTime);
 			//_aiController.Do();
 			//_collidableController.Do();
 

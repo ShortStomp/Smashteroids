@@ -4,10 +4,9 @@ using System.Linq;
 using System.Xml.Linq;
 using EntityLibrary.Components;
 using EntityLibrary.Components.Factory;
-using EntityLibrary.Components.Interface;
-using LogSystem;
-using Smashteroids.Data;
 using EntityLibrary.IOC;
+using EntityLibrary.IOData;
+using LogSystem;
 
 namespace EntityLibrary.EntityIO
 {
@@ -93,23 +92,43 @@ namespace EntityLibrary.EntityIO
 			}
 
 			EntityIoLogger.WriteIoInformation(xEntity, IoType.Entity, _entityNumber);
-			ICollection<IComponent> components = new List<IComponent>();
+			EntityData entityData = new EntityData();
 
 			var xComponents = xEntity.Descendants("Components");
 
-			var xRenderable = xComponents.Descendants("Renderable");
-			var xPlayer = xComponents.Descendants("Player");
+			var xSpriteComponent = xComponents.Descendants("Sprite");
+			var xPlayerComponent = xComponents.Descendants("Player");
+			var xPositionComponent = xComponents.Descendants("Position");
+			var xVelocitiyComponent = xComponents.Descendants("Velocity");
+			var xAccelerationComponent = xComponents.Descendants("Acceleration");
 
-			if (xRenderable.Any())
+			if (xSpriteComponent.Any())
 			{
-				components.Add(_componentFactory.CreateComponent<RenderableComponent>(xRenderable.FirstOrDefault()));
+				entityData.Components.Add(
+					_componentFactory.CreateComponent<SpriteComponent>(xSpriteComponent.FirstOrDefault()));
 			}
-			if (xPlayer.Any())
+			if (xPlayerComponent.Any())
 			{
-				components.Add(_componentFactory.CreateComponent<PlayerComponent>(xPlayer.FirstOrDefault()));
+				entityData.Components.Add(
+					_componentFactory.CreateComponent<PlayerComponent>(xPlayerComponent.FirstOrDefault()));
+			}
+			if (xPositionComponent.Any())
+			{
+				entityData.Components.Add(
+					_componentFactory.CreateComponent<PositionComponent>(xPositionComponent.FirstOrDefault()));
+			}
+			if (xVelocitiyComponent.Any())
+			{
+				entityData.Components.Add(
+					_componentFactory.CreateComponent<VelocityComponent>(xVelocitiyComponent.FirstOrDefault()));
+			}
+			if (xAccelerationComponent.Any())
+			{
+				entityData.Components.Add(
+					_componentFactory.CreateComponent<AccelerationComponent>(xAccelerationComponent.FirstOrDefault()));
 			}
 
-			return new EntityData() { Components = components };
+			return entityData;
 		}
 	}
 }

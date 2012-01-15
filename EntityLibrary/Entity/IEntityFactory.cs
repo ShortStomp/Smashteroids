@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using EntityLibrary.Components.Interface;
+using EntityLibrary.Components.Base;
 
 namespace EntityLibrary.Entity
 {
 	internal interface IEntityFactory
 	{
-		IEntity CreateEntity(IEnumerable<IComponent> componentCollection);
+		IEntity CreateEntity(IEnumerable<Component> componentCollection);
 	}
 }

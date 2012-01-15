@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using EntityLibrary.Components;
 using LogSystem;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using EntityLibrary.Components.Objects;
 
 namespace EntityLibrary.Repositories
 {
@@ -33,33 +32,47 @@ namespace EntityLibrary.Repositories
 			return _textures.Keys.Contains(filename);
 		}
 
-		public void CreateTextureForSprite(string filename, Sprite sprite)
+		public void CreateTextureForSprite(string filename, SpriteComponent sprite)
 		{
 			if (ContainsTextureWithFilename(filename))
 			{
-				sprite.Texture = GetTextureByName(filename);
+				sprite.Texture = GetTextureByFilename(filename);
 			}
 			else
 			{
 				// texture is not already present, ok to add
 				sprite.Texture = _contentManager.Load<Texture2D>("./images/" + filename);
+
+				DefaultLogger.WriteLine(MessageType.Information, string.Format("Texture {0} loaded into texture repository. Texture width: {1}, height {2}.", 
+					sprite.Texture.Name, sprite.Texture.Width, sprite.Texture.Height));
+
 				_textures.Add(filename, sprite.Texture);
 			}
 		}
 
 
-		public Texture2D GetTextureByName(string filename)
+		public Texture2D GetTextureByFilename(string filename)
 		{
-			try
+			if (ContainsTextureWithFilename(filename))
 			{
-				// otherwise return the texture
 				return _textures[filename];
 			}
-			catch (Exception e)
+
+			try
 			{
-				DefaultLogger.WriteExceptionThenQuit(MessageType.RuntimeException, e);
-				// TODO: log specific exception
-				throw;
+				// texture is not already present, ok to add
+				Texture2D texture = _contentManager.Load<Texture2D>("./images/" + filename);
+
+				DefaultLogger.WriteLine(MessageType.Information, string.Format("Texture {0} loaded into texture repository. Texture width: {1}, height {2}.",
+					texture.Name, texture.Width, texture.Height));
+
+				_textures.Add(filename, texture);
+				return texture;
+			}
+			catch (ContentLoadException cle)
+			{
+				DefaultLogger.WriteExceptionThenQuit(MessageType.RuntimeException, cle);
+				return default(Texture2D);
 			}
 		}
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using EntityLibrary.Components.Interface;
 using EntityLibrary.Entity;
+using EntityLibrary.Components.Base;
+using System;
 
 namespace EntityLibrary.Repositories.EntityRepository
 {
@@ -30,12 +31,35 @@ namespace EntityLibrary.Repositories.EntityRepository
 
 
 		/// <summary>
+		/// Gets all entities that have the matching component type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="U"></typeparam>
+		/// <returns></returns>
+		IEnumerable<IEntity> GetEntitiesWithComponents<T, U>()
+			where T : Component
+			where U : Component;
+
+
+		/// <summary>
+		/// Gets all entities that have the matching component type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="U"></typeparam>
+		/// <returns></returns>
+		IEnumerable<IEntity> GetEntitiesWithComponents<T, U, V>()
+			where T : Component
+			where U : Component
+			where V : Component;
+
+
+		/// <summary>
 		/// Gets all entities with component.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="component">The component.</param>
 		/// <returns></returns>
-		IEnumerable<IEntity> GetEntitiesWithComponent<T>() where T : IComponent;
+		IEnumerable<IEntity> GetEntitiesWithComponents<T>() where T : Component;
 
 
 		/// <summary>
@@ -43,6 +67,6 @@ namespace EntityLibrary.Repositories.EntityRepository
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		IEnumerable<T> GetComponentsOfType<T>() where T : IComponent;
+		IEnumerable<T> GetComponentsOfType<T>() where T : Component;
 	}
 }

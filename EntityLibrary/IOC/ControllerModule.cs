@@ -34,8 +34,9 @@ namespace EntityLibrary.IOC
 				.SingleInstance();
 
 			builder
-				.Register(c => new PlayerController())
-					.As<IPlayerController>()
+				.Register(c => 
+					new InteractiveController(c.Resolve<IEntityRepository>()))
+					.As<IInteractiveController>()
 					.SingleInstance();
 
 			base.Load(builder);

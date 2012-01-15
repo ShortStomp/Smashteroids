@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Linq;
-using EntityLibrary.Components.Interface;
-using EntityLibrary.Components.Objects;
+using EntityLibrary.Components.Base;
 using EntityLibrary.Controllers;
 using EntityLibrary.Extensions;
 using EntityLibrary.Message;
@@ -18,14 +16,14 @@ namespace EntityLibrary.Components.Factory
 
 		private IMessageFactory _messageFactory;
 		private IRenderableController _renderableController;
-		private IPlayerController _playerController;
+		private IInteractiveController _playerController;
 		private XElement _currentComponent;
 
 		#endregion
 
 		#region Constructors
 
-		internal ComponentFactory(IMessageFactory factory, IRenderableController rc, IPlayerController pc)
+		internal ComponentFactory(IMessageFactory factory, IRenderableController rc, IInteractiveController pc)
 		{
 			_messageFactory = factory;
 			_renderableController = rc;
@@ -37,7 +35,7 @@ namespace EntityLibrary.Components.Factory
 		#region IComponentFactory Members
 
 
-		public IComponent CreateComponent<T>(XElement xComponent) where T : IComponent
+		public Component CreateComponent<T>(XElement xComponent) where T : Component
 		{
 			if (xComponent == null)
 			{
@@ -47,20 +45,38 @@ namespace EntityLibrary.Components.Factory
 			// Reset the component counter and the pointer to the current component we are parsing
 			_currentComponent = xComponent;
 
-			if (typeof(T) == typeof(RenderableComponent))
+			if (typeof(T) == typeof(SpriteComponent))
 			{
-				var rc = ParseRenderableComponent(xComponent);
-				_messageFactory.CreateAndSendMessage(
-					(Action<string, Sprite>)_renderableController.CreateNewTextureForSprite, DateTime.Now, rc.Sprite.Filename, rc.Sprite);
-				return rc;
+				return ParseSpriteComponent(xComponent);
 			}
 			else if (typeof(T) == typeof(PlayerComponent))
 			{
 				var pc = ParsePlayerComponent(xComponent);
-				_messageFactory.CreateAndSendMessage(
-					(Action<Player>)_playerController.AddPlayer, DateTime.Now, pc.Player);
 
+				// TODO: going to have to fix this.
+				//_playerController.AddPlayer(pc.Player);
 				return pc;
+			}
+			else if (typeof(T) == typeof(PositionComponent))
+			{
+				return new PositionComponent()
+				{
+					Position = ParseVector2(xComponent, "Position")
+				};
+			}
+			else if (typeof(T) == typeof(VelocityComponent))
+			{
+				return new VelocityComponent()
+				{
+					Velocity = ParseVector2(xComponent, "Velocity")
+				};
+			}
+			else if (typeof(T) == typeof(AccelerationComponent))
+			{
+				return new AccelerationComponent()
+				{
+					Acceleration = ParseVector2(xComponent, "Acceleration")
+				};
 			}
 
 			throw new InvalidOperationException(
@@ -69,29 +85,10 @@ namespace EntityLibrary.Components.Factory
 
 
 		/// <summary>
-		/// Parses an xml renderable component.
+		/// Parses the player component.
 		/// </summary>
-		/// <param name="xRenderableComponent">The xml renderable component.</param>
+		/// <param name="xPlayerComponent">The x player component.</param>
 		/// <returns></returns>
-		private RenderableComponent ParseRenderableComponent(XElement xRenderableComponent)
-		{
-			EntityIoLogger.WriteIoInformation(xRenderableComponent, IoType.Component, _currentComponent.LineNumber());
-
-			try
-			{
-				return new RenderableComponent()
-				{
-					Sprite = ParseSprite(xRenderableComponent.Element("sprite")),
-				};
-			}
-			catch (Exception e)  
-			{
-				EntityIoLogger.WriteFatalIOException(e, xRenderableComponent, IoType.Component, _currentComponent.LineNumber());
-				return default(RenderableComponent);
-			}
-		}
-
-
 		private PlayerComponent ParsePlayerComponent(XElement xPlayerComponent)
 		{
 			EntityIoLogger.WriteIoInformation(xPlayerComponent, IoType.Component, _currentComponent.LineNumber());
@@ -100,7 +97,7 @@ namespace EntityLibrary.Components.Factory
 			{
 				return new PlayerComponent()
 				{
-					Player = new Player() { _name = xPlayerComponent.Element("name").Value }
+					Name = xPlayerComponent.Element("name").Value
 				};
 			}
 			catch (Exception e)
@@ -117,25 +114,27 @@ namespace EntityLibrary.Components.Factory
 		/// </summary>
 		/// <param name="spriteElement">The sprite element to parse.</param>
 		/// <returns></returns>
-		private Sprite ParseSprite(XElement spriteElement)
+		private SpriteComponent ParseSpriteComponent(XElement spriteElement)
 		{
 			EntityIoLogger.WriteIoInformation(spriteElement, IoType.Component, _currentComponent.LineNumber());
 
-			var sprite = new Sprite(spriteElement.Element("filename").Value)
+			var sprite = new SpriteComponent()
 			{
-				DestRect = ParseRectangle(spriteElement.Element("rectangle"), "rectangle"),
+				Height = ParseFloat(spriteElement.Element("height"), "height"),
+				Width = ParseFloat(spriteElement.Element("width"), "width"),
 				SourceRect = ParseNullableRectangle(spriteElement.Element("texturerect"), "texturerect"),
 				Color = ParseColor(spriteElement.Element("color"), "color"),
 				Rotatation = ParseFloat(spriteElement.Element("rotation"), "rotation"),
-				Scale = ParseFloat(spriteElement.Element("scale"), "scale", 1.0f),
+				Scale = ParseVector2(spriteElement.Element("scale"), "scale", Vector2.One),
 				SpriteEffect = ParseSpriteEffects(spriteElement.Element("spriteeffects")),
 				DepthLayer = ParseFloat(spriteElement.Element("depth"), "depth"),
+				Texture = _renderableController.GetTextureByFilename(spriteElement.Element("texture").Value),
 			};
 			
 			/* If the origin is set in the XML file, use that. Otherwise,
 			 * default to the middle of the sprite. */
 			sprite.Origin = spriteElement.Element("origin") == null
-				? new Vector2(sprite.DestRect.Width / 2, sprite.DestRect.Height / 2)
+				? new Vector2(sprite.Texture.Width / 2, sprite.Texture.Height / 2)
 				: ParseVector2(spriteElement.Element("origin"), "origin");
 
 			return sprite;
@@ -210,7 +209,7 @@ namespace EntityLibrary.Components.Factory
 		/// </summary>
 		/// <param name="xPositionElement">The position element to parse.</param>
 		/// <returns></returns>
-		private Vector2 ParseVector2(XElement xPositionElement, string valueName)
+		private Vector2 ParseVector2(XElement xPositionElement, string valueName, Vector2? defaultValue = null)
 		{
 			if (xPositionElement == null)
 			{

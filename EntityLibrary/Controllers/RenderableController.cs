@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using EntityLibrary.Repositories;
-using EntityLibrary.Controllers.Base;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using EntityLibrary.Components;
+using EntityLibrary.Controllers.Base;
+using EntityLibrary.Repositories;
 using EntityLibrary.Repositories.EntityRepository;
-using EntityLibrary.Components.Objects;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using EntityLibrary.Entity;
 
 namespace EntityLibrary.Controllers
 {
@@ -42,26 +40,30 @@ namespace EntityLibrary.Controllers
 
 		#region IRenderableController Members
 
-		public void CreateNewTextureForSprite(string filename, Sprite sprite)
+		public Texture2D GetTextureByFilename(string filename)
 		{
-			_textureRepository.CreateTextureForSprite(filename, sprite);
+			return _textureRepository.GetTextureByFilename(filename);
 		}
 
 		public void DrawRenderables(SpriteBatch spriteBatch, GameTime gameTime)
 		{
 			spriteBatch.Begin();
 
-			foreach (RenderableComponent rc in _entityRepository.GetComponentsOfType<RenderableComponent>())
+			foreach (IEntity entity in _entityRepository.GetEntitiesWithComponents<SpriteComponent, PositionComponent>())
 			{
+				var position = entity.GetComponent<PositionComponent>();
+				var sprite = entity.GetComponent<SpriteComponent>();
+			
 				spriteBatch.Draw(
-					rc.Sprite.Texture,
-					rc.Sprite.DestRect,
-					rc.Sprite.SourceRect,
-					rc.Sprite.Color,
-					rc.Sprite.Rotatation,
-					rc.Sprite.Origin,
-					rc.Sprite.SpriteEffect,
-					rc.Sprite.DepthLayer);
+					sprite.Texture,
+					position.Position,
+					sprite.SourceRect,
+					sprite.Color,
+					sprite.Rotatation,
+					sprite.Origin,
+					sprite.Scale,
+					sprite.SpriteEffect,
+					sprite.DepthLayer);
 			}
 
 			spriteBatch.End();

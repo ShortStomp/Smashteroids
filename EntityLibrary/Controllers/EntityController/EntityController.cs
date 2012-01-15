@@ -38,7 +38,8 @@ namespace EntityLibrary.Controllers
 
 			foreach (var entityData in entityDataCollection)
 			{
-				_entityRepository.InsertEntity(_entityFactory.CreateEntity(entityData.Components));
+				var entity = _entityFactory.CreateEntity(entityData.Components);
+				_entityRepository.InsertEntity(entity);
 			}
 		}
 

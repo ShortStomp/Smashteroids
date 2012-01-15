@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntityLibrary.Components.Interface;
-using LogSystem;
 using EntityLibrary.Components;
+using EntityLibrary.Components.Base;
+using LogSystem;
+using Microsoft.Xna.Framework;
+using System.Collections;
 
 namespace EntityLibrary.Entity
 {
@@ -14,7 +16,13 @@ namespace EntityLibrary.Entity
 	{
 		#region Properties
 
-		private ICollection<IComponent> Components { get; set; }
+		public Vector2 Position { get; set; }
+
+		#endregion
+
+		#region Fields
+
+		private ICollection<Component> _components;
 
 		#endregion
 
@@ -22,41 +30,41 @@ namespace EntityLibrary.Entity
 
 		internal Entity()
 		{
-			Components = new List<IComponent>();
+			_components = new List<Component>();
 		}
 
 		#endregion
 
 		#region Private Members
 
-		private void ResolveComponentDependencies()
-		{
-			var r = Components.Where(c => c.GetType() == typeof(RenderableComponent));
-			var p = Components.Where(c => c.GetType() == typeof(PlayerComponent));
+		//private void ResolveComponentDependencies()
+		//{
+		//    var r = Components.Where(c => c.GetType() == typeof(RenderableComponent));
+		//    var p = Components.Where(c => c.GetType() == typeof(PlayerComponent));
 
-			// if the entity has both renderable component and a player component
-			if (r.Any() && p.Any())
-			{
-				(p.FirstOrDefault() as PlayerComponent).Player._sprite = (r.FirstOrDefault() as RenderableComponent).Sprite;
-			}
+		//    // if the entity has both renderable component and a player component
+		//    if (r.Any() && p.Any())
+		//    {
+		//        (p.FirstOrDefault() as PlayerComponent).Player.Sprite = (r.FirstOrDefault() as RenderableComponent).Sprite;
+		//    }
 
-			// otherwise we need to check if we need to remove any dependences (ie when removing a component dynamically)
-			else
-			{
-				// if there is a player, and no renderable component
-				// NOTE: the !r.any() is unnecessary for now, but leaving it in for when we expand this system.
-				if (p.Any() && !r.Any())
-				{
-					(r.FirstOrDefault() as RenderableComponent).Sprite = null;
-				}
-			}
-		}
+		//    // otherwise we need to check if we need to remove any dependences (ie when removing a component dynamically)
+		//    else
+		//    {
+		//        // if there is a player, and no renderable component
+		//        // NOTE: the !r.any() is unnecessary for now, but leaving it in for when we expand this system.
+		//        if (p.Any() && !r.Any())
+		//        {
+		//            (r.FirstOrDefault() as RenderableComponent).Sprite = null;
+		//        }
+		//    }
+		//}
 
 		#endregion
 
 		#region IEntity Members
 
-		public void AddComponent(IComponent component)
+		public void AddComponent(Component component)
 		{
 			if (ContainsComponent(component))
 			{
@@ -69,13 +77,13 @@ namespace EntityLibrary.Entity
 			}
 
 			// safe to attach component to entity
-			Components.Add(component);
+			_components.Add(component);
 
-			ResolveComponentDependencies();
+			//ResolveComponentDependencies();
 		}
 
 
-		public void RemoveComponent(IComponent component)
+		public void RemoveComponent(Component component)
 		{
 			if (!ContainsComponent(component))
 			{
@@ -88,9 +96,9 @@ namespace EntityLibrary.Entity
 			}
 
 			// safe to remove component
-			Components.Remove(component);
+			_components.Remove(component);
 
-			ResolveComponentDependencies();
+			//ResolveComponentDependencies();
 		}
 
 
@@ -99,17 +107,17 @@ namespace EntityLibrary.Entity
 		/// </summary>
 		/// <param name="component"></param>
 		/// <returns></returns>
-		public bool ContainsComponent(IComponent component)
+		public bool ContainsComponent(Component component)
 		{
-			return Components
+			return _components
 				.Where(c => c.GetType() == component.GetType())
 				.Any();
 		}
 
 
-		public T GetComponent<T>() where T : IComponent
+		public T GetComponent<T>() where T : Component
 		{
-			return Components
+			return _components
 				.OfType<T>()
 				.SingleOrDefault();
 		}
@@ -119,17 +127,26 @@ namespace EntityLibrary.Entity
 		/// Return the components this entity has as a collection.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<IComponent> GetComponents()
+		public IEnumerable<Component> GetComponents()
 		{
-			return Components;
+			return _components;
 		}
 
 
-		public bool ContainsComponent<T>() where T : IComponent
+		public bool ContainsComponent<T>() where T : Component
 		{
-			return Components
+			return _components
 				.OfType<T>()
 				.Any();
+		}
+
+		#endregion
+
+		#region IEnumerable Members
+
+		public IEnumerator GetEnumerator()
+		{
+			return _components.GetEnumerator();
 		}
 
 		#endregion

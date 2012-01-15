@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Smashteroids.Data;
+using EntityLibrary.IOData;
+
 namespace EntityLibrary.EntityIO
 {
 	internal interface IEntityParser

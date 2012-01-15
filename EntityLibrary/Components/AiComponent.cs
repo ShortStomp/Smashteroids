@@ -1,8 +1,8 @@
-﻿using EntityLibrary.Components.Interface;
+﻿using EntityLibrary.Components.Base;
 
 namespace EntityLibrary.Components
 {
-	internal class AiComponent : IComponent
+	internal class AiComponent : Component
 	{
 	}
 }

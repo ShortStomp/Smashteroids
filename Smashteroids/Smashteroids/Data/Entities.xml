@@ -2,56 +2,37 @@
 <root>
   <Entity>
     <Components>
-      <Renderable>
-        <sprite>
-          <rectangle>
-            <x>100</x>
-            <y>100</y>
-            <w>64</w>
-            <h>64</h>
-          </rectangle>
-          <rotation>0</rotation>
-          <color>
-            <r>255</r>
-            <g>255</g>
-            <b>255</b>
-            <a>50</a>
-          </color>
-          <scale>2.6</scale>
-          <filename>BlueShip</filename>
-        </sprite>
-      </Renderable>
+      <Sprite>
+        <texture>BlueShip</texture>
+        <color>
+          <r>255</r>
+          <g>255</g>
+          <b>255</b>
+          <a>50</a>
+        </color>
+        <width>64</width>
+        <height>64</height>
+        <rotation>0</rotation>
+        <scale>
+          <x>1</x>
+          <y>1</y>
+        </scale>
+      </Sprite>
       <Player>
         <name>Player1</name>
       </Player>
+      <Position>
+        <x>100</x>
+        <y>200</y>
+      </Position>
+      <Velocity>
+        <x>0</x>
+        <y>.001</y>
+      </Velocity>
+      <Acceleration>
+        <x>0.1</x>
+        <y>0.2</y>
+      </Acceleration>
     </Components>
   </Entity>
-
-  <Entity>
-    <Components>
-      <Renderable>
-        <sprite>
-          <rectangle>
-            <x>200</x>
-            <y>200</y>
-            <w>64</w>
-            <h>64</h>
-          </rectangle>
-          <rotation>0</rotation>
-          <color>
-            <r>255</r>
-            <g>255</g>
-            <b>255</b>
-            <a>50</a>
-          </color>
-          <scale>2.6</scale>
-          <filename>RedShip</filename>
-        </sprite>
-      </Renderable>
-      <Player>
-        <name>Player1</name>
-      </Player>
-    </Components>
-  </Entity>
-  
 </root>

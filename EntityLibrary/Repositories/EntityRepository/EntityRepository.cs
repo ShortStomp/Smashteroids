@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using EntityLibrary.Context;
 using EntityLibrary.Entity;
-using EntityLibrary.Components.Interface;
 using LogSystem;
+using EntityLibrary.Components.Base;
 
 namespace EntityLibrary.Repositories.EntityRepository
 {
@@ -73,7 +72,44 @@ namespace EntityLibrary.Repositories.EntityRepository
 		}
 
 
-		public IEnumerable<IEntity> GetEntitiesWithComponent<T>() where T : IComponent
+		/// <summary>
+		/// Gets all entities that have the matching component type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="U"></typeparam>
+		/// <returns></returns>
+		public IEnumerable<IEntity> GetEntitiesWithComponents<T, U, V>() 
+			where T : Component 
+			where U : Component
+			where V : Component
+		{
+			return GetEntitiesWithComponents<T, U>()
+				.Union(GetEntitiesWithComponents<V>());
+		}
+
+
+		/// <summary>
+		/// Gets all entities that have the matching component type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="U"></typeparam>
+		/// <returns></returns>
+		public IEnumerable<IEntity> GetEntitiesWithComponents<T, U>() 
+			where T : Component 
+			where U : Component
+		{
+			return GetEntitiesWithComponents<T>()
+				.Union(GetEntitiesWithComponents<U>());
+		}
+
+
+
+		/// <summary>
+		/// Gets all entities with the mathing component type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public IEnumerable<IEntity> GetEntitiesWithComponents<T>() where T : Component
 		{
 			return _context.Entities
 				.Where(entity =>
@@ -81,7 +117,13 @@ namespace EntityLibrary.Repositories.EntityRepository
 		}
 
 
-		public IEnumerable<T> GetComponentsOfType<T>() where T : IComponent
+
+		/// <summary>
+		/// Get all components with the component type T.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public IEnumerable<T> GetComponentsOfType<T>() where T : Component
 		{
 			// todo: cache this list probably
 			ICollection<T> components = new List<T>(_context.Entities.Count);

@@ -25,7 +25,7 @@ namespace EntityLibrary.IOC
 					new ComponentFactory(
 						c.Resolve<IMessageFactory>(),
 						c.Resolve<IRenderableController>(),
-						c.Resolve<IPlayerController>()))
+						c.Resolve<IInteractiveController>()))
 				.As<IComponentFactory>()
 				.SingleInstance();
 

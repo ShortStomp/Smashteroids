@@ -53,15 +53,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\AccelerationComponent.cs" />
     <Compile Include="Components\AiComponent.cs" />
+    <Compile Include="Components\Base\Component.cs" />
     <Compile Include="Components\CollidableComponent.cs" />
     <Compile Include="Components\Factory\ComponentFactory.cs" />
     <Compile Include="Components\Factory\IComponentFactory.cs" />
-    <Compile Include="Components\Interface\Component.cs" />
-    <Compile Include="Components\Objects\Player.cs" />
-    <Compile Include="Components\Objects\Sprite.cs" />
     <Compile Include="Components\PlayerComponent.cs" />
-    <Compile Include="Components\RenderableComponent.cs" />
+    <Compile Include="Components\PositionComponent.cs" />
+    <Compile Include="Components\SpriteComponent.cs" />
+    <Compile Include="Components\VelocityComponent.cs" />
     <Compile Include="Context\EntityContext.cs" />
     <Compile Include="Context\IEntityContext.cs" />
     <Compile Include="Controllers\AiController.cs" />
@@ -71,11 +72,11 @@
     <Compile Include="Controllers\EntityController\IEntityController.cs" />
     <Compile Include="Controllers\IAiController.cs" />
     <Compile Include="Controllers\ICollidableController.cs" />
-    <Compile Include="Controllers\IPlayerController.cs" />
+    <Compile Include="Controllers\IInteractiveController.cs" />
     <Compile Include="Controllers\IRenderableController.cs" />
-    <Compile Include="Controllers\PlayerController.cs" />
+    <Compile Include="Controllers\InteractiveController.cs" />
     <Compile Include="Controllers\RenderableController.cs" />
-    <Compile Include="EntityIO\Data\EntityData.cs" />
+    <Compile Include="IOData\EntityData.cs" />
     <Compile Include="EntityIO\EntityParser.cs" />
     <Compile Include="EntityIO\IEntityParser.cs" />
     <Compile Include="Entity\Entity.cs" />
